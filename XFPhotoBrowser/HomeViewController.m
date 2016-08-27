@@ -50,19 +50,19 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
 #pragma mark - 上传图片
 - (IBAction)didUploadImageAction {
     
-//    [XFHUD showWithContent:@"这部分直接看代码"];
+    [XFHUD showWithContent:@"这部分直接看代码"];
 //    //这里考虑到很多服务器都是1张1张的上传所以直接就遍历数组然后直接1个1个的上传
-     NSString *url = @"http://www.88meichou.com/api/user/getEditProfile.php";
-     for (XFAssetsModel *model in self.dataArray) {
-//         //这里可以自己在封装一层动态设置图片压缩的比例,动态选择上传的图片是缩略图或者原图,也可以直接进入上传方法里面修改
-         [BANetManager ba_uploadImageWithUrlString:url parameters:nil withImageArray:@[model.asset] withSuccessBlock:^(id response) {
-             
-         } withFailurBlock:^(NSError *error) {
-             
-         } withUpLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
-             
-         }];
-     }
+//     NSString *url = @"";
+//     for (XFAssetsModel *model in self.dataArray) {
+////         //这里可以自己在封装一层动态设置图片压缩的比例,动态选择上传的图片是缩略图或者原图,也可以直接进入上传方法里面修改
+//         [BANetManager ba_uploadImageWithUrlString:url parameters:nil withImageArray:@[model.asset] withSuccessBlock:^(id response) {
+//             
+//         } withFailurBlock:^(NSError *error) {
+//             
+//         } withUpLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+//             
+//         }];
+//     }
 }
 
 - (IBAction)didRightBarButtonAction {
