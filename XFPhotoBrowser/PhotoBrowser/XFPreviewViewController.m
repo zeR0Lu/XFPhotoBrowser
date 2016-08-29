@@ -14,7 +14,7 @@
 @property (strong, nonatomic) UICollectionView *collectionView;
 
 @property (strong, nonatomic) NSMutableArray *dataArray;
-@property (assign, nonatomic) NSIndexPath *currentIndexPath;
+@property (assign, nonatomic) NSInteger currentItem;
 
 @property (assign, nonatomic) BOOL navHid;
 @end
@@ -43,22 +43,32 @@
     [self.collectionView reloadData];
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.showIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
     self.title = [NSString stringWithFormat:@"%.0ld/%ld",(long)self.showIndex + 1,self.dataArray.count];
+    
+    self.currentItem = self.showIndex;
 }
 
 - (void)didDeleteImageAction {
     XFWeakSelf;
+    
     [self.collectionView performBatchUpdates:^{
-        [wself.assetsArray removeObjectAtIndex:wself.currentIndexPath.item];
-        [wself.dataArray removeObjectAtIndex:wself.currentIndexPath.item];
+        [wself.assetsArray removeObjectAtIndex:wself.currentItem];
+        [wself.dataArray removeObjectAtIndex:wself.currentItem];
         if ( wself.deleteImageBlock ) {
-            wself.deleteImageBlock(wself.currentIndexPath.item);
+            wself.deleteImageBlock(wself.currentItem);
         }
-        [wself.collectionView deleteItemsAtIndexPaths:@[wself.currentIndexPath]];
+        [wself.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:wself.currentItem inSection:0]]];
     } completion:^(BOOL finished) {
-        [wself.collectionView reloadData];
+        if ( wself.dataArray.count ) {
+            [wself.collectionView reloadData];
+            wself.currentItem = wself.currentItem == wself.dataArray.count?wself.currentItem - 1:wself.currentItem;
+            wself.title = [NSString stringWithFormat:@"%.0ld/%ld",(long)wself.currentItem + 1,wself.dataArray.count];
+        }else {
+            [wself.navigationController popViewControllerAnimated:true];
+        }
     }];
 }
 
+#pragma mark - UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
@@ -79,10 +89,13 @@
     return cell;
 }
 
-#pragma mark - 
+#pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
 //    NSLog(@"%@======%@",NSStringFromCGPoint(velocity),NSStringFromCGPoint(*targetContentOffset));
-    self.title = [NSString stringWithFormat:@"%.0f/%ld",targetContentOffset->x/XFScreenWidth + 1,self.dataArray.count];
+    
+    NSInteger currentIndex = targetContentOffset->x/XFScreenWidth;
+    self.title = [NSString stringWithFormat:@"%.0ld/%ld",(long)currentIndex + 1,self.dataArray.count];
+    self.currentItem = currentIndex;
 }
 
 #pragma mark - 懒加载
