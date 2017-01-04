@@ -242,9 +242,16 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
 }
 
 #pragma mark - 懒加载
-- (NSMutableArray *)dataArray {
-    if ( !_dataArray ) {
+- (NSMutableArray *)dataArray
+{
+    if ( !_dataArray )
+    {
         _dataArray = [NSMutableArray array];
+        
+        /*! 此处是默认添加第一张图片，不需要的可以直接删掉！ */
+        XFAssetsModel *model = [XFAssetsModel new];
+        model.thumbnailImage = [UIImage imageNamed:@"Assets_Selected"];
+        [_dataArray addObject:model];
     }
     return _dataArray;
 }
