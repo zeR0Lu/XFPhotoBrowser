@@ -38,7 +38,14 @@
     
     [self.dataArray removeAllObjects];
     for ( XFAssetsModel *model in self.assetsArray ) {
-        [self.dataArray addObject:[UIImage imageWithCGImage:model.asset.defaultRepresentation.fullScreenImage]];
+        if (model.asset)
+        {
+            [self.dataArray addObject:[UIImage imageWithCGImage:model.asset.defaultRepresentation.fullScreenImage]];
+        }
+        else
+        {
+            [self.dataArray addObject:model.thumbnailImage];
+        }
     }
     [self.collectionView reloadData];
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.showIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
