@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ALAssetsGroup;
+@class ALAssetsGroup, XFAssetsModel;
 
-typedef void(^CallBack)(NSArray *selectedArray);
+typedef void(^CallBack)(NSArray<XFAssetsModel *> *selectedArray);
+typedef void(^GetImageBlock)(NSArray<UIImage *> *selectedImageArray);
 
 @interface XFBrowerViewController : UINavigationController
 /**
@@ -22,6 +23,8 @@ typedef void(^CallBack)(NSArray *selectedArray);
 @property (strong, nonatomic) NSArray *selectedAssets;
 
 @property (copy, nonatomic) CallBack callback;
+
+@property (nonatomic, copy) GetImageBlock getImageBlock;
 
 + (instancetype)shareBrowerManager;
 @end

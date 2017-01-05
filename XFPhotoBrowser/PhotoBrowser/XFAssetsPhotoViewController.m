@@ -30,11 +30,13 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 @property (strong, nonatomic) XFSelectedAssetsViewController *selectedAssetsView;
-
+/** 相册分组 */
 @property (strong, nonatomic) NSMutableArray *groupArray;
-@property (strong, nonatomic) NSMutableArray *dataArray;
-@property (strong, nonatomic) NSMutableArray *selectedArray;
-
+/** 分组内的数据 */
+@property (strong, nonatomic) NSMutableArray<XFAssetsModel *> *dataArray;
+/** 选中的 Asset 数组 */
+@property (strong, nonatomic) NSMutableArray<XFAssetsModel *> *selectedArray;
+/** 导航栏 */
 @property (strong, nonatomic) XFBrowerViewController *browerViewController;
 @end
 
@@ -62,10 +64,21 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         [wself.collectionView reloadData];
     };
     self.selectedAssetsView.confirmBlock = ^() {
+        // 这个block返回的是 Asset 的数组
         if ( wself.browerViewController.callback ) {
             wself.browerViewController.callback([wself.selectedArray copy]);
-            [wself didCancelBarButtonAction];
         }
+        
+        // 这个block返回的是 UIimage 的数组
+        if ( wself.browerViewController.getImageBlock ) {
+            NSMutableArray<UIImage *> *result = [NSMutableArray array];
+            [wself.selectedArray enumerateObjectsUsingBlock:^(XFAssetsModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [result addObject:[UIImage imageWithCGImage:[[obj.asset defaultRepresentation] fullResolutionImage]]];
+            }];
+            wself.browerViewController.callback(result.copy);
+        }
+        
+        [wself didCancelBarButtonAction];
     };
     [self.bottomView addSubview:self.selectedAssetsView.view];
     [self addChildViewController:self.selectedAssetsView];
@@ -98,22 +111,29 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     }];
 }
 
+#pragma mark - 处理相册改变的通知
+//(例如在退出后台时相册有写入新的照片,就要更新数据)
 - (void)assetsLibraryChange {
 //    NSLog(@"通知方法");
     
     XFWeakSelf;
+    // 重置数据
     [self.groupArray removeAllObjects];
-    
+    // 首先获取相册分组
     [XFAssetsLibraryData getLibraryGroupWithSuccess:^(NSArray *array) {
         [wself.groupArray addObjectsFromArray:array];
+        // 设置当前页面的标题
         wself.title = [[wself.groupArray.firstObject group] valueForProperty:ALAssetsGroupPropertyName];
+        // 根据分组默认获取第一组的照片
         [XFAssetsLibraryData getAssetsWithGroup:[wself.groupArray.firstObject group] successBlock:^(NSArray *array) {
             
+            // 重置数据源数据
             [wself.dataArray removeAllObjects];
             [wself.dataArray addObjectsFromArray:array];
             [XFHUD dismiss];
             
             NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[wself.selectedArray copy]];
+            // 标记原来选中的照片
             for ( XFAssetsModel *smodel in wself.selectedArray ) {
                 for ( XFAssetsModel *cmodel in wself.dataArray ) {
                     if ( [smodel.modelID isEqual:cmodel.modelID] ) {
@@ -125,6 +145,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
                     [tempArray removeObject:smodel];
                 }
             }
+            // 处理在进入后台时,删除了已经选中的图片
             if ( tempArray.count != wself.selectedArray.count ) {
                 [wself.selectedArray removeAllObjects];
                 [wself.selectedArray addObjectsFromArray:tempArray];
@@ -132,6 +153,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
             [wself.collectionView reloadData];
         }];
     } failBlcok:^(NSError *error) {
+        // 获取失败的操作
         [XFHUD dismiss];
         XFAssetsLibraryAccessFailureView *view = [XFAssetsLibraryAccessFailureView makeView];
         [wself.view addSubview:view];
@@ -181,6 +203,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     }];
 }
 
+#pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
@@ -237,6 +260,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     return UIEdgeInsetsMake(4.f, 4.f, 4.f, 4.f);
 }
 
+#pragma mark - 处理选择和取消选中的数据模型
 - (void)changeDataWithIndexPath:(NSIndexPath *)indexPath {
     
     XFAssetsModel *model = self.dataArray[indexPath.item - 1];
@@ -259,6 +283,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     [self.collectionView reloadData];
 }
 
+#pragma mark - lazy
 - (NSMutableArray *)dataArray {
     if ( !_dataArray ) {
         _dataArray = [NSMutableArray array];
@@ -285,6 +310,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - free
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];

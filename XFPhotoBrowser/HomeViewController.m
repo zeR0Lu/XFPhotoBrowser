@@ -215,11 +215,17 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
 //            browerViewController.maxPhotosNumber = 10;
             browerViewController.selectedAssets = [NSArray arrayWithArray:[self.dataArray copy]];
             XFWeakSelf;
-            browerViewController.callback = ^(NSArray *selectedArray) {
+            browerViewController.callback = ^(NSArray<XFAssetsModel *> *selectedArray) {
                 [wself.dataArray removeAllObjects];
                 [wself.dataArray addObjectsFromArray:selectedArray];
                 [wself.collectionView reloadData];
             };
+            /**
+             这里可以选择需要返回的数据直接就是原图,2个回调最好选择1个
+             browerViewController.getImageBlock = ^(NSArray<UIImage *> *selectedImageArray) {
+             
+             };
+             */
             [self presentViewController:browerViewController animated:true completion:nil];
         });
     }
