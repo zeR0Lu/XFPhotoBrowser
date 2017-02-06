@@ -209,8 +209,8 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
             }];
         }
     }else if ( 1 == buttonIndex ) {
-        [XFHUD showInOpenLibary];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [XFHUD showInOpenLibary];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManager];
 //            browerViewController.maxPhotosNumber = 10;
             browerViewController.selectedAssets = [NSArray arrayWithArray:[self.dataArray copy]];
@@ -221,7 +221,7 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
                 [wself.collectionView reloadData];
             };
             [self presentViewController:browerViewController animated:true completion:nil];
-        });
+//        });
     }
 }
 
