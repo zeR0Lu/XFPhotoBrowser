@@ -21,7 +21,7 @@
     
     model.asset = asset;
     
-    model.thumbnailImage = [UIImage imageWithCGImage:asset.thumbnail];
+    model.thumbnailImage = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
     
 //    @try {
 //        if ( asset.defaultRepresentation ) {

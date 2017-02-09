@@ -195,7 +195,7 @@
                         XFAssetsModel *model = [XFAssetsModel getModelWithData:asset];
                         [wself.photosArray addObject:model];
                         
-                        wself.lastPhotoImageView.image = [UIImage imageWithCGImage:asset.thumbnail];
+                        wself.lastPhotoImageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
                         wself.takePhotosNumberLabel.text = wself.photosArray.count?@(wself.photosArray.count).stringValue:@"";
                         
                         if ( wself.takePhotosBlock ) {
