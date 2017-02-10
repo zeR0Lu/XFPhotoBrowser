@@ -54,7 +54,6 @@ static char imageKey;
         [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(pixelWidth,pixelHeight) contentMode:PHImageContentModeAspectFit options:imageREquestOptions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
             if ( result ) {
-                objc_setAssociatedObject(self, &imageKey, phAsset.localIdentifier, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 [GCDQueue executeInMainQueue:^{
                     XFStrongSelf;
                     sself.image = result;

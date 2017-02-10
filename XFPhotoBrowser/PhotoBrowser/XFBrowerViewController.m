@@ -43,16 +43,14 @@
     
     XFAssetsPhotoViewController *photoVC = [XFAssetsPhotoViewController new];
     photoVC.browerViewController = nav;
-    XFWeakSelf;
     
     [[XFAssetsLibraryManager shareManager] getCameraGroupWithSuccess:^(XFAssetsGroupModel *model) {
         photoVC.assetsGroupModel = model;
         
-        NSLog(@"pushtophotovc");
         [nav pushViewController:photoVC animated:NO];
     } failBlcok:^{
         XFAssetsLibraryAccessFailureView *view = [XFAssetsLibraryAccessFailureView makeView];
-        [[[wself alloc] view] addSubview:view];
+        [alumbVC.view addSubview:view];
         view.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
     }];
     

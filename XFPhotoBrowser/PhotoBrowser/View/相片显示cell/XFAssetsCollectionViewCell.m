@@ -13,6 +13,7 @@
 @interface XFAssetsCollectionViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *statusImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *assetsImageView;
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
 @end
 
@@ -20,6 +21,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
     
 }
 

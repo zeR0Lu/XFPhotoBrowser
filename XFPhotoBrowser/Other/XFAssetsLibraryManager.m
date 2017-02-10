@@ -28,17 +28,27 @@
 #pragma mark - Return YES if Authorized 返回YES如果得到了授权
 - (BOOL)authorizationStatusAuthorized {
     
-    BOOL status = false;
+    __block BOOL photoStatus = false;
+    
     if (iOS8Later) {
-        if ([PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusAuthorized) {
-            status = YES;
-        }
+        
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);        //申请访问权限
+        
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            if ( status == PHAuthorizationStatusAuthorized ) {
+                photoStatus = true;
+            }
+            dispatch_semaphore_signal(sema);
+        }];
+        
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
     } else {
         if ( [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized ){
-            status = YES;
+            photoStatus = YES;
         } 
     }
-    return status;
+    
+    return photoStatus;
 }
 
 #pragma mark - 获取相机胶卷相册分组(这里的名称在不同的版本会有变化,但是那个类型不会变)

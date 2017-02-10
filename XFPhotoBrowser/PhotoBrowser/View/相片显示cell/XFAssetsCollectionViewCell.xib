@@ -57,9 +57,10 @@
             </variation>
             <connections>
                 <outlet property="assetsImageView" destination="QXr-WD-KxA" id="ECY-Tz-Hs7"/>
+                <outlet property="button" destination="hC7-I0-FIS" id="Ir5-PD-T9T"/>
                 <outlet property="statusImageView" destination="hRu-IL-UgU" id="M4e-zr-aD1"/>
             </connections>
-            <point key="canvasLocation" x="267.5" y="32.5"/>
+            <point key="canvasLocation" x="-31" y="-248"/>
         </collectionViewCell>
     </objects>
     <resources>
