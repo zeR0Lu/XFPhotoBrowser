@@ -203,17 +203,14 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
             imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
             imagePicker.delegate = self;
             imagePicker.videoQuality = UIImagePickerControllerQualityTypeLow;
-//            imagePicker.allowsEditing = YES;
+            imagePicker.allowsEditing = YES;
             [self presentViewController:imagePicker animated:YES completion:^{
                 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
             }];
         }
     }else if ( 1 == buttonIndex ) {
-//        [XFHUD showInOpenLibary];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManager];
+            XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManagerWithSelectedAssets:self.dataArray.copy];
 //            browerViewController.maxPhotosNumber = 10;
-            browerViewController.selectedAssets = [NSArray arrayWithArray:[self.dataArray copy]];
             XFWeakSelf;
             browerViewController.callback = ^(NSArray<XFAssetsModel *> *selectedArray) {
                 [wself.dataArray removeAllObjects];
@@ -226,8 +223,9 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
              
              };
              */
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self presentViewController:browerViewController animated:true completion:nil];
-//        });
+        });
     }
 }
 
@@ -255,9 +253,9 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
         _dataArray = [NSMutableArray array];
         
         /*! 此处是默认添加第一张图片，不需要的可以直接删掉！ */
-        XFAssetsModel *model = [XFAssetsModel new];
-        model.thumbnailImage = [UIImage imageNamed:@"Assets_Selected"];
-        [_dataArray addObject:model];
+//        XFAssetsModel *model = [XFAssetsModel new];
+//        model.thumbnailImage = [UIImage imageNamed:@"Assets_Selected"];
+//        [_dataArray addObject:model];
     }
     return _dataArray;
 }

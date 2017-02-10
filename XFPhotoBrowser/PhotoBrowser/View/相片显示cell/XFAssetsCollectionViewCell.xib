@@ -29,16 +29,26 @@
                             <constraint firstAttribute="width" secondItem="hRu-IL-UgU" secondAttribute="height" multiplier="1:1" id="kG6-s9-bdU"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hC7-I0-FIS">
+                        <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
+                        <connections>
+                            <action selector="didImageAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="PT6-PE-yuK"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="hC7-I0-FIS" secondAttribute="trailing" id="5J8-uG-2nz"/>
                 <constraint firstItem="QXr-WD-KxA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="6bd-VU-IO8"/>
+                <constraint firstItem="hC7-I0-FIS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Dpo-cq-jcs"/>
                 <constraint firstAttribute="bottom" secondItem="QXr-WD-KxA" secondAttribute="bottom" id="FOV-ur-dHD"/>
                 <constraint firstAttribute="trailing" secondItem="QXr-WD-KxA" secondAttribute="trailing" id="L6Z-Lh-q0R"/>
                 <constraint firstAttribute="trailing" secondItem="hRu-IL-UgU" secondAttribute="trailing" constant="2" id="M8G-VC-Sov"/>
                 <constraint firstItem="hRu-IL-UgU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="59" id="NJY-sc-T5V"/>
                 <constraint firstItem="hRu-IL-UgU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="kTK-Gt-ACl"/>
                 <constraint firstItem="QXr-WD-KxA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="m9l-Yc-zg9"/>
+                <constraint firstItem="hC7-I0-FIS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="pN5-bq-i0q"/>
+                <constraint firstAttribute="bottom" secondItem="hC7-I0-FIS" secondAttribute="bottom" id="wnX-ug-dvq"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
@@ -49,7 +59,7 @@
                 <outlet property="assetsImageView" destination="QXr-WD-KxA" id="ECY-Tz-Hs7"/>
                 <outlet property="statusImageView" destination="hRu-IL-UgU" id="M4e-zr-aD1"/>
             </connections>
-            <point key="canvasLocation" x="268" y="33"/>
+            <point key="canvasLocation" x="267.5" y="32.5"/>
         </collectionViewCell>
     </objects>
     <resources>

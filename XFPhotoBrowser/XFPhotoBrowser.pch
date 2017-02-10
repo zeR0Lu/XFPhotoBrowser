@@ -12,6 +12,9 @@
 #import <UIKit/UIKit.h>
 #import "UIColor+Hex.h"
 
+#define iOS8Later ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
+#define iOS9Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
+
 #define RGB(x,y,z) [UIColor colorWithRed:x/255.f green:y/255.f blue:z/255.f alpha:1.f]
 #define RGBA(x,y,z,a) [UIColor colorWithRed:x/255.f green:y/255.f blue:z/255.f alpha:a]
 
@@ -19,7 +22,8 @@
 
 #define loadSelfXib loadXibWithName([[self class] description])
 
-#define XFWeakSelf  __weak __typeof(self) wself = self
+#define XFWeakSelf  __weak typeof(self) wself = self
+#define XFStrongSelf  __strong typeof(wself) sself = wself
 
 #define XFScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define XFScreenHeight [[UIScreen mainScreen] bounds].size.height

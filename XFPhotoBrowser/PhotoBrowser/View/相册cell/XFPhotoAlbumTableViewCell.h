@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class XFAssetsLibraryModel;
+@class XFAssetsGroupModel;
 
 @interface XFPhotoAlbumTableViewCell : UITableViewCell
 
-- (void)setupModel:(XFAssetsLibraryModel *)model;
+- (void)setupModel:(XFAssetsGroupModel *)model;
 
 @end

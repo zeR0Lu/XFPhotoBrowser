@@ -15,12 +15,13 @@
 #import "XFAssetsModel.h"
 #import "UIView+SDAutoLayout.h"
 #import "XFHUD.h"
-#import "XFAssetsLibraryModel.h"
-#import "XFAssetsLibraryData.h"
+#import "XFAssetsGroupModel.h"
+#import "XFAssetsLibraryManager.h"
 #import "XFAssetsLibraryAccessFailureView.h"
 #import "XFPhotoAlbumViewController.h"
 #import "XFCameraViewController.h"
 #import "XFBrowerViewController.h"
+#import "GCD.h"
 
 static NSString *firstItemIdentifier = @"XFTakePhotoCollectionViewCell";
 static NSString *aidentifier = @"XFAssetsCollectionViewCell";
@@ -36,8 +37,8 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
 @property (strong, nonatomic) NSMutableArray<XFAssetsModel *> *dataArray;
 /** 选中的 Asset 数组 */
 @property (strong, nonatomic) NSMutableArray<XFAssetsModel *> *selectedArray;
-/** 导航栏 */
-@property (strong, nonatomic) XFBrowerViewController *browerViewController;
+
+@property (nonatomic, strong) GCDSemaphore *semaphore;
 @end
 
 @implementation XFAssetsPhotoViewController
@@ -45,69 +46,37 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupUI];
+}
+
+- (void)setupUI {
     [self.collectionView registerNib:[UINib nibWithNibName:firstItemIdentifier bundle:nil] forCellWithReuseIdentifier:firstItemIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:aidentifier bundle:nil] forCellWithReuseIdentifier:aidentifier];
     
-    self.browerViewController = (XFBrowerViewController *)self.navigationController;
-    
-    self.selectedAssetsView = [XFSelectedAssetsViewController makeView];
-    self.selectedAssetsView.maxPhotosNumber = self.browerViewController.maxPhotosNumber;
-    XFWeakSelf;
-    self.selectedAssetsView.deleteAssetsBlock = ^(XFAssetsModel *model) {
-        [wself.selectedArray removeObject:model];
-        for ( XFAssetsModel *dmodel in wself.dataArray ) {
-            if ( [dmodel.modelID isEqual:model.modelID] ) {
-                dmodel.selected = false;
-                break;
-            }
-        }
-        [wself.collectionView reloadData];
-    };
-    self.selectedAssetsView.confirmBlock = ^() {
-        // 这个block返回的是 Asset 的数组
-        if ( wself.browerViewController.callback ) {
-            wself.browerViewController.callback([wself.selectedArray copy]);
-        }
-        
-        // 这个block返回的是 UIimage 的数组
-        if ( wself.browerViewController.getImageBlock ) {
-            NSMutableArray<UIImage *> *result = [NSMutableArray array];
-            [wself.selectedArray enumerateObjectsUsingBlock:^(XFAssetsModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [result addObject:[UIImage imageWithCGImage:[[obj.asset defaultRepresentation] fullResolutionImage]]];
-            }];
-            wself.browerViewController.callback(result.copy);
-        }
-        
-        [wself didCancelBarButtonAction];
-    };
-    [self.bottomView addSubview:self.selectedAssetsView.view];
     [self addChildViewController:self.selectedAssetsView];
-    self.selectedAssetsView.view.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
-    
-    if ( !self.assetsGroup ) {
-        [self setupData];
-    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetsLibraryChange) name:ALAssetsLibraryChangedNotification object:nil];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didCancelBarButtonAction)];
 }
 
+#pragma mark - 取消按钮事件
 - (void)didCancelBarButtonAction {
     [self dismissViewControllerAnimated:true completion:^{
         self.browerViewController = nil;
     }];
 }
 
-- (void)setAssetsGroup:(ALAssetsGroup *)assetsGroup {
-    _assetsGroup = assetsGroup;
-    self.title = [assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+- (void)setAssetsGroupModel:(XFAssetsGroupModel *)assetsGroupModel {
+    _assetsGroupModel = assetsGroupModel;
+    self.title = assetsGroupModel.groupName;
     XFWeakSelf;
-    [XFAssetsLibraryData getAssetsWithGroup:assetsGroup successBlock:^(NSArray *array) {
+    [[XFAssetsLibraryManager shareManager] getAssetsWithGroupModel:assetsGroupModel selectAssets:self.browerViewController.selectedAssets successBlock:^(NSArray *array, BOOL stop) {
         [wself.dataArray removeAllObjects];
         [wself.dataArray addObjectsFromArray:array];
-        [XFHUD dismiss];
         [wself.collectionView reloadData];
+        
+        [wself setupSelectedAsset];
     }];
 }
 
@@ -120,12 +89,12 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     // 重置数据
     [self.groupArray removeAllObjects];
     // 首先获取相册分组
-    [XFAssetsLibraryData getLibraryGroupWithSuccess:^(NSArray *array) {
+    [[XFAssetsLibraryManager shareManager] getAllAlumbGroupWithSuccess:^(NSArray<XFAssetsGroupModel *> *array) {
         [wself.groupArray addObjectsFromArray:array];
         // 设置当前页面的标题
         wself.title = [[wself.groupArray.firstObject group] valueForProperty:ALAssetsGroupPropertyName];
         // 根据分组默认获取第一组的照片
-        [XFAssetsLibraryData getAssetsWithGroup:[wself.groupArray.firstObject group] successBlock:^(NSArray *array) {
+        [[XFAssetsLibraryManager shareManager] getAssetsWithGroupModel:wself.groupArray.firstObject selectAssets:nil successBlock:^(NSArray *array, BOOL stop) {
             
             // 重置数据源数据
             [wself.dataArray removeAllObjects];
@@ -161,46 +130,16 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     }];
 }
 
-#pragma mark - 初始化数据
-- (void)setupData {
-    XFWeakSelf;
-    
-    [self.groupArray removeAllObjects];
-    [XFAssetsLibraryData getLibraryGroupWithSuccess:^(NSArray *array) {
-        [wself.groupArray addObjectsFromArray:array];
-        wself.title = [[wself.groupArray.firstObject group] valueForProperty:ALAssetsGroupPropertyName];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHGROUP" object:[wself.groupArray copy]];
-        [XFAssetsLibraryData getAssetsWithGroup:[wself.groupArray.firstObject group] successBlock:^(NSArray *array) {
-            [wself.dataArray removeAllObjects];
-            [wself.dataArray addObjectsFromArray:array];
-            [XFHUD dismiss];
-            
-            if ( wself.browerViewController.selectedAssets ) {
-                for ( XFAssetsModel *smodel in wself.browerViewController.selectedAssets ) {
-                    for ( XFAssetsModel *cmodel in wself.dataArray ) {
-                        if ( [smodel.modelID isEqual:cmodel.modelID] ) {
-                            cmodel.selected = true;
-                        }
-                    }
-                }
-                
-                [wself.selectedArray removeAllObjects];
-                [wself.selectedArray addObjectsFromArray:wself.browerViewController.selectedAssets];
-                
-                [wself.selectedAssetsView addModelWithData:wself.browerViewController.selectedAssets];
-                
-                wself.browerViewController.selectedAssets = nil;
-            }
-            
-            [wself.collectionView reloadData];
-        }];
+- (void)setupSelectedAsset {
+    if ( self.browerViewController.selectedAssets.count ) {
         
-    } failBlcok:^(NSError *error) {
-        [XFHUD dismiss];
-        XFAssetsLibraryAccessFailureView *view = [XFAssetsLibraryAccessFailureView makeView];
-        [wself.view addSubview:view];
-        view.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
-    }];
+        [self.selectedArray removeAllObjects];
+        [self.selectedArray addObjectsFromArray:self.browerViewController.selectedAssets];
+        
+        [self.selectedAssetsView addModelWithData:self.browerViewController.selectedAssets];
+        
+        self.browerViewController.selectedAssets = nil;
+    }
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
@@ -220,6 +159,22 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         XFAssetsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:aidentifier forIndexPath:indexPath];
         XFAssetsModel *model = self.dataArray[indexPath.item - 1];
         cell.model = model;
+        XFWeakSelf;
+        cell.didSelectImageBlock = ^(BOOL isSelected) {
+            if ( wself.browerViewController.maxPhotosNumber == 0 ) {
+                [wself changeDataWithIndexPath:indexPath];
+            } else {
+                if ( isSelected ) {
+                    [wself changeDataWithIndexPath:indexPath];
+                }else {
+                    if ( wself.selectedArray.count < wself.browerViewController.maxPhotosNumber ) {
+                        [wself changeDataWithIndexPath:indexPath];
+                    }else {
+                        [XFHUD overMaxNumberWithNumber:wself.browerViewController.maxPhotosNumber];
+                    }
+                }
+            }
+        };
         return cell;
     }
 }
@@ -238,21 +193,6 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         [self presentViewController:cameraViewController animated:true completion:nil];
     }else {
         
-        if ( self.browerViewController.maxPhotosNumber == 0 ) {
-            [self changeDataWithIndexPath:indexPath];
-        }else {
-            XFAssetsModel *model = self.dataArray[indexPath.item - 1];
-            
-            if ( model.selected ) {
-                [self changeDataWithIndexPath:indexPath];
-            }else {
-                if ( self.selectedArray.count < self.browerViewController.maxPhotosNumber ) {
-                    [self changeDataWithIndexPath:indexPath];
-                }else {
-                    [XFHUD overMaxNumberWithNumber:self.browerViewController.maxPhotosNumber];
-                }
-            }
-        }
     }
 }
 
@@ -265,7 +205,8 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     
     XFAssetsModel *model = self.dataArray[indexPath.item - 1];
     
-    if ( model.selected ) {
+    if ( !model.selected ) {
+        [self.selectedAssetsView deleteModelWithData:@[model]];
         NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[self.selectedArray copy]];
         for ( XFAssetsModel *smodel in self.selectedArray) {
             if ( [smodel.modelID isEqual:model.modelID] ) {
@@ -274,13 +215,12 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         }
         [self.selectedArray removeAllObjects];
         [self.selectedArray addObjectsFromArray:[tempArray copy]];
-        [self.selectedAssetsView deleteModelWithData:@[model]];
+        
     }else {
         [self.selectedArray addObject:model];
         [self.selectedAssetsView addModelWithData:@[model]];
     }
-    model.selected = !model.selected;
-    [self.collectionView reloadData];
+//    model.selected = !model.selected;
 }
 
 #pragma mark - lazy
@@ -303,6 +243,45 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         _groupArray = [NSMutableArray array];
     }
     return _groupArray;
+}
+
+- (XFSelectedAssetsViewController *)selectedAssetsView {
+    if ( !_selectedAssetsView ) {
+        _selectedAssetsView = [XFSelectedAssetsViewController makeView];
+        
+        _selectedAssetsView.maxPhotosNumber = self.browerViewController.maxPhotosNumber;
+        XFWeakSelf;
+        self.selectedAssetsView.deleteAssetsBlock = ^(XFAssetsModel *model) {
+            [wself.selectedArray removeObject:model];
+            for ( XFAssetsModel *dmodel in wself.dataArray ) {
+                if ( [dmodel.modelID isEqual:model.modelID] ) {
+                    dmodel.selected = false;
+                    break;
+                }
+            }
+            [wself.collectionView reloadData];
+        };
+        _selectedAssetsView.confirmBlock = ^() {
+            // 这个block返回的是 Asset 的数组
+            if ( wself.browerViewController.callback ) {
+                wself.browerViewController.callback([wself.selectedArray copy]);
+            }
+            
+            // 这个block返回的是 UIimage 的数组
+            if ( wself.browerViewController.getImageBlock ) {
+                NSMutableArray<UIImage *> *result = [NSMutableArray array];
+                [wself.selectedArray enumerateObjectsUsingBlock:^(XFAssetsModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [result addObject:[UIImage imageWithCGImage:[[obj.asset defaultRepresentation] fullResolutionImage]]];
+                }];
+                wself.browerViewController.callback(result.copy);
+            }
+            
+            [wself didCancelBarButtonAction];
+        };
+        [self.bottomView addSubview:_selectedAssetsView.view];
+        _selectedAssetsView.view.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
+    }
+    return _selectedAssetsView;
 }
 
 - (void)didReceiveMemoryWarning {

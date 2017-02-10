@@ -20,11 +20,11 @@ typedef void(^GetImageBlock)(NSArray<UIImage *> *selectedImageArray);
 
 @property (nonatomic, strong) ALAssetsGroup *assetsGroup;
 
-@property (strong, nonatomic) NSArray *selectedAssets;
+@property (strong, nonatomic) NSArray<XFAssetsModel *> *selectedAssets;
 
 @property (copy, nonatomic) CallBack callback;
 
 @property (nonatomic, copy) GetImageBlock getImageBlock;
 
-+ (instancetype)shareBrowerManager;
++ (instancetype)shareBrowerManagerWithSelectedAssets:(NSArray<XFAssetsModel *> *)selectedAssets;
 @end

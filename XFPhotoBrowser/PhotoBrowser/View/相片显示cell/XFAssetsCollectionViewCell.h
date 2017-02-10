@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 @class XFAssetsModel;
+
+typedef void(^DidSelectImageBlock)(BOOL isSelected);
+
 @interface XFAssetsCollectionViewCell : UICollectionViewCell
+
 @property (strong, nonatomic) XFAssetsModel *model;
+
+@property (nonatomic, copy) DidSelectImageBlock didSelectImageBlock;
 @end

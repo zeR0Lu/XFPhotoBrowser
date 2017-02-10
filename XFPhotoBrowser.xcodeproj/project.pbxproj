@@ -75,6 +75,7 @@
 		616D0F941D464D310006A3CE /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 616D0F8D1D464D310006A3CE /* SVProgressHUD.bundle */; };
 		616D0F951D464D310006A3CE /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D0F8F1D464D310006A3CE /* SVProgressHUD.m */; };
 		616D0F961D464D310006A3CE /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D0F911D464D310006A3CE /* SVRadialGradientLayer.m */; };
+		619ADE461E4DA92600FA836C /* UIImageView+XFExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 619ADE451E4DA92600FA836C /* UIImageView+XFExtension.m */; };
 		61B1FD621D2B624A00977DC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B1FD611D2B624A00977DC4 /* main.m */; };
 		61B1FD651D2B624A00977DC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B1FD641D2B624A00977DC4 /* AppDelegate.m */; };
 		61B1FD681D2B624A00977DC4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B1FD671D2B624A00977DC4 /* HomeViewController.m */; };
@@ -87,11 +88,15 @@
 		61B1FDA41D2B857400977DC4 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61B1FDA31D2B857400977DC4 /* AssetsLibrary.framework */; };
 		61B1FDA91D2B875E00977DC4 /* XFPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B1FDA71D2B875E00977DC4 /* XFPhotoAlbumViewController.m */; };
 		61B1FDAA1D2B875E00977DC4 /* XFPhotoAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B1FDA81D2B875E00977DC4 /* XFPhotoAlbumViewController.xib */; };
-		61B1FDAE1D2B8B2800977DC4 /* XFAssetsLibraryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B1FDAD1D2B8B2800977DC4 /* XFAssetsLibraryModel.m */; };
+		61B1FDAE1D2B8B2800977DC4 /* XFAssetsGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B1FDAD1D2B8B2800977DC4 /* XFAssetsGroupModel.m */; };
 		61B55C811D2CB15200CDC434 /* XFHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B55C801D2CB15200CDC434 /* XFHUD.m */; };
 		61B55C851D2CB34300CDC434 /* XFHomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B55C831D2CB34300CDC434 /* XFHomeCollectionViewCell.m */; };
 		61B55C861D2CB34300CDC434 /* XFHomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B55C841D2CB34300CDC434 /* XFHomeCollectionViewCell.xib */; };
-		61B55C8F1D2CD3B500CDC434 /* XFAssetsLibraryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B55C8E1D2CD3B500CDC434 /* XFAssetsLibraryData.m */; };
+		61B55C8F1D2CD3B500CDC434 /* XFAssetsLibraryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B55C8E1D2CD3B500CDC434 /* XFAssetsLibraryManager.m */; };
+		61DF2F111E4CB39B009AEDFE /* GCDGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF2F0A1E4CB39B009AEDFE /* GCDGroup.m */; };
+		61DF2F121E4CB39B009AEDFE /* GCDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF2F0C1E4CB39B009AEDFE /* GCDQueue.m */; };
+		61DF2F131E4CB39B009AEDFE /* GCDSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF2F0E1E4CB39B009AEDFE /* GCDSemaphore.m */; };
+		61DF2F141E4CB39B009AEDFE /* GCDTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF2F101E4CB39B009AEDFE /* GCDTimer.m */; };
 		61EEF70B1D33A260003BC0FB /* XFCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EEF7071D33A260003BC0FB /* XFCameraViewController.m */; };
 		61EEF70C1D33A260003BC0FB /* XFCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61EEF7081D33A260003BC0FB /* XFCameraViewController.xib */; };
 		61EEF70F1D33A2A3003BC0FB /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EEF70E1D33A2A3003BC0FB /* UIColor+Hex.m */; };
@@ -234,6 +239,8 @@
 		616D0F8F1D464D310006A3CE /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		616D0F901D464D310006A3CE /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		616D0F911D464D310006A3CE /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		619ADE441E4DA92600FA836C /* UIImageView+XFExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+XFExtension.h"; sourceTree = "<group>"; };
+		619ADE451E4DA92600FA836C /* UIImageView+XFExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+XFExtension.m"; sourceTree = "<group>"; };
 		61B1FD5D1D2B624A00977DC4 /* XFPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XFPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61B1FD611D2B624A00977DC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		61B1FD631D2B624A00977DC4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -253,15 +260,24 @@
 		61B1FDA61D2B875E00977DC4 /* XFPhotoAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFPhotoAlbumViewController.h; sourceTree = "<group>"; };
 		61B1FDA71D2B875E00977DC4 /* XFPhotoAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFPhotoAlbumViewController.m; sourceTree = "<group>"; };
 		61B1FDA81D2B875E00977DC4 /* XFPhotoAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XFPhotoAlbumViewController.xib; sourceTree = "<group>"; };
-		61B1FDAC1D2B8B2800977DC4 /* XFAssetsLibraryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFAssetsLibraryModel.h; sourceTree = "<group>"; };
-		61B1FDAD1D2B8B2800977DC4 /* XFAssetsLibraryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFAssetsLibraryModel.m; sourceTree = "<group>"; };
+		61B1FDAC1D2B8B2800977DC4 /* XFAssetsGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFAssetsGroupModel.h; sourceTree = "<group>"; };
+		61B1FDAD1D2B8B2800977DC4 /* XFAssetsGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFAssetsGroupModel.m; sourceTree = "<group>"; };
 		61B55C7F1D2CB15200CDC434 /* XFHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFHUD.h; sourceTree = "<group>"; };
 		61B55C801D2CB15200CDC434 /* XFHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFHUD.m; sourceTree = "<group>"; };
 		61B55C821D2CB34300CDC434 /* XFHomeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFHomeCollectionViewCell.h; sourceTree = "<group>"; };
 		61B55C831D2CB34300CDC434 /* XFHomeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFHomeCollectionViewCell.m; sourceTree = "<group>"; };
 		61B55C841D2CB34300CDC434 /* XFHomeCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XFHomeCollectionViewCell.xib; sourceTree = "<group>"; };
-		61B55C8D1D2CD3B500CDC434 /* XFAssetsLibraryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFAssetsLibraryData.h; sourceTree = "<group>"; };
-		61B55C8E1D2CD3B500CDC434 /* XFAssetsLibraryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFAssetsLibraryData.m; sourceTree = "<group>"; };
+		61B55C8D1D2CD3B500CDC434 /* XFAssetsLibraryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFAssetsLibraryManager.h; sourceTree = "<group>"; };
+		61B55C8E1D2CD3B500CDC434 /* XFAssetsLibraryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFAssetsLibraryManager.m; sourceTree = "<group>"; };
+		61DF2F081E4CB39B009AEDFE /* GCD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCD.h; sourceTree = "<group>"; };
+		61DF2F091E4CB39B009AEDFE /* GCDGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDGroup.h; sourceTree = "<group>"; };
+		61DF2F0A1E4CB39B009AEDFE /* GCDGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDGroup.m; sourceTree = "<group>"; };
+		61DF2F0B1E4CB39B009AEDFE /* GCDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDQueue.h; sourceTree = "<group>"; };
+		61DF2F0C1E4CB39B009AEDFE /* GCDQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDQueue.m; sourceTree = "<group>"; };
+		61DF2F0D1E4CB39B009AEDFE /* GCDSemaphore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDSemaphore.h; sourceTree = "<group>"; };
+		61DF2F0E1E4CB39B009AEDFE /* GCDSemaphore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDSemaphore.m; sourceTree = "<group>"; };
+		61DF2F0F1E4CB39B009AEDFE /* GCDTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTimer.h; sourceTree = "<group>"; };
+		61DF2F101E4CB39B009AEDFE /* GCDTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTimer.m; sourceTree = "<group>"; };
 		61EEF7061D33A260003BC0FB /* XFCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFCameraViewController.h; sourceTree = "<group>"; };
 		61EEF7071D33A260003BC0FB /* XFCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XFCameraViewController.m; sourceTree = "<group>"; };
 		61EEF7081D33A260003BC0FB /* XFCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XFCameraViewController.xib; sourceTree = "<group>"; };
@@ -586,8 +602,8 @@
 		61B1FDAB1D2B8B0100977DC4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				61B1FDAC1D2B8B2800977DC4 /* XFAssetsLibraryModel.h */,
-				61B1FDAD1D2B8B2800977DC4 /* XFAssetsLibraryModel.m */,
+				61B1FDAC1D2B8B2800977DC4 /* XFAssetsGroupModel.h */,
+				61B1FDAD1D2B8B2800977DC4 /* XFAssetsGroupModel.m */,
 				61043CBC1D2BA0AF00695FEC /* XFAssetsModel.h */,
 				61043CBD1D2BA0AF00695FEC /* XFAssetsModel.m */,
 			);
@@ -605,6 +621,8 @@
 				61043CBF1D2BA1F800695FEC /* XFTakePhotoCollectionViewCell.h */,
 				61043CC01D2BA1F800695FEC /* XFTakePhotoCollectionViewCell.m */,
 				61043CC11D2BA1F800695FEC /* XFTakePhotoCollectionViewCell.xib */,
+				619ADE441E4DA92600FA836C /* UIImageView+XFExtension.h */,
+				619ADE451E4DA92600FA836C /* UIImageView+XFExtension.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -612,15 +630,32 @@
 		61B55C7E1D2CB13B00CDC434 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				61DF2F071E4CB39B009AEDFE /* GCD */,
 				610CC7FD1D3F531300F02B66 /* BANetManager(网络类) */,
 				61EEF70D1D33A2A3003BC0FB /* UIColor+Hex.h */,
 				61EEF70E1D33A2A3003BC0FB /* UIColor+Hex.m */,
 				61B55C7F1D2CB15200CDC434 /* XFHUD.h */,
 				61B55C801D2CB15200CDC434 /* XFHUD.m */,
-				61B55C8D1D2CD3B500CDC434 /* XFAssetsLibraryData.h */,
-				61B55C8E1D2CD3B500CDC434 /* XFAssetsLibraryData.m */,
+				61B55C8D1D2CD3B500CDC434 /* XFAssetsLibraryManager.h */,
+				61B55C8E1D2CD3B500CDC434 /* XFAssetsLibraryManager.m */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		61DF2F071E4CB39B009AEDFE /* GCD */ = {
+			isa = PBXGroup;
+			children = (
+				61DF2F081E4CB39B009AEDFE /* GCD.h */,
+				61DF2F091E4CB39B009AEDFE /* GCDGroup.h */,
+				61DF2F0A1E4CB39B009AEDFE /* GCDGroup.m */,
+				61DF2F0B1E4CB39B009AEDFE /* GCDQueue.h */,
+				61DF2F0C1E4CB39B009AEDFE /* GCDQueue.m */,
+				61DF2F0D1E4CB39B009AEDFE /* GCDSemaphore.h */,
+				61DF2F0E1E4CB39B009AEDFE /* GCDSemaphore.m */,
+				61DF2F0F1E4CB39B009AEDFE /* GCDTimer.h */,
+				61DF2F101E4CB39B009AEDFE /* GCDTimer.m */,
+			);
+			path = GCD;
 			sourceTree = "<group>";
 		};
 		61EEF7041D33A260003BC0FB /* Camera */ = {
@@ -693,7 +728,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = XF;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = zeroLu;
 				TargetAttributes = {
 					61B1FD5C1D2B624A00977DC4 = {
@@ -752,19 +787,21 @@
 			files = (
 				616D0F311D464D140006A3CE /* UIProgressView+AFNetworking.m in Sources */,
 				616D0F121D464D0F0006A3CE /* AFSecurityPolicy.m in Sources */,
+				619ADE461E4DA92600FA836C /* UIImageView+XFExtension.m in Sources */,
 				616D0F851D464D2B0006A3CE /* UIImageView+HighlightedWebCache.m in Sources */,
 				610CC8221D3F58A200F02B66 /* XFAssetsCollectionViewCell.m in Sources */,
 				616D0F871D464D2B0006A3CE /* UIView+WebCacheOperation.m in Sources */,
 				616D0F2F1D464D140006A3CE /* UIButton+AFNetworking.m in Sources */,
 				610CC81C1D3F588200F02B66 /* XFPhotoAlbumTableViewCell.m in Sources */,
 				616D0F921D464D310006A3CE /* SVIndefiniteAnimatedView.m in Sources */,
-				61B55C8F1D2CD3B500CDC434 /* XFAssetsLibraryData.m in Sources */,
+				61B55C8F1D2CD3B500CDC434 /* XFAssetsLibraryManager.m in Sources */,
 				616D0F141D464D0F0006A3CE /* AFURLResponseSerialization.m in Sources */,
 				61EEF70F1D33A2A3003BC0FB /* UIColor+Hex.m in Sources */,
 				616D0F4D1D464D1D0006A3CE /* UIApplication+MemoryLeak.m in Sources */,
 				616D0F4A1D464D1D0006A3CE /* MLeakedObjectProxy.m in Sources */,
 				616D0F5B1D464D250006A3CE /* UIView+SDAutoLayout.m in Sources */,
 				616D0F501D464D1D0006A3CE /* UISplitViewController+MemoryLeak.m in Sources */,
+				61DF2F141E4CB39B009AEDFE /* GCDTimer.m in Sources */,
 				616D0F2E1D464D140006A3CE /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				616D0F7A1D464D2B0006A3CE /* NSData+ImageContentType.m in Sources */,
 				61EEF70B1D33A260003BC0FB /* XFCameraViewController.m in Sources */,
@@ -773,7 +810,7 @@
 				616D0F821D464D2B0006A3CE /* UIButton+WebCache.m in Sources */,
 				610CC8041D3F531300F02B66 /* BABaseNetManager.m in Sources */,
 				616D0F331D464D140006A3CE /* UIWebView+AFNetworking.m in Sources */,
-				61B1FDAE1D2B8B2800977DC4 /* XFAssetsLibraryModel.m in Sources */,
+				61B1FDAE1D2B8B2800977DC4 /* XFAssetsGroupModel.m in Sources */,
 				616D0F521D464D1E0006A3CE /* UIView+MemoryLeak.m in Sources */,
 				616D0F811D464D2B0006A3CE /* SDWebImagePrefetcher.m in Sources */,
 				616D0F301D464D140006A3CE /* UIImageView+AFNetworking.m in Sources */,
@@ -785,6 +822,7 @@
 				616D0F151D464D0F0006A3CE /* AFURLSessionManager.m in Sources */,
 				616D0F7D1D464D2B0006A3CE /* SDWebImageDecoder.m in Sources */,
 				610CC8061D3F531300F02B66 /* UIImage+CompressImage.m in Sources */,
+				61DF2F131E4CB39B009AEDFE /* GCDSemaphore.m in Sources */,
 				616D0F511D464D1E0006A3CE /* UITabBarController+MemoryLeak.m in Sources */,
 				616D0F4C1D464D1D0006A3CE /* NSObject+MemoryLeak.m in Sources */,
 				616D0F4B1D464D1D0006A3CE /* MLeaksMessenger.m in Sources */,
@@ -795,6 +833,7 @@
 				610CC8101D3F580000F02B66 /* XFAssetsLibraryAccessFailureView.m in Sources */,
 				61043CBE1D2BA0AF00695FEC /* XFAssetsModel.m in Sources */,
 				616D0F7B1D464D2B0006A3CE /* SDImageCache.m in Sources */,
+				61DF2F121E4CB39B009AEDFE /* GCDQueue.m in Sources */,
 				61B1FD651D2B624A00977DC4 /* AppDelegate.m in Sources */,
 				616D0F131D464D0F0006A3CE /* AFURLRequestSerialization.m in Sources */,
 				616D0F961D464D310006A3CE /* SVRadialGradientLayer.m in Sources */,
@@ -814,6 +853,7 @@
 				616D0F801D464D2B0006A3CE /* SDWebImageManager.m in Sources */,
 				616D0F7E1D464D2B0006A3CE /* SDWebImageDownloader.m in Sources */,
 				610CC8051D3F531300F02B66 /* BANetManager.m in Sources */,
+				61DF2F111E4CB39B009AEDFE /* GCDGroup.m in Sources */,
 				616D0F7F1D464D2B0006A3CE /* SDWebImageDownloaderOperation.m in Sources */,
 				61B55C811D2CB15200CDC434 /* XFHUD.m in Sources */,
 				616D0F101D464D0F0006A3CE /* AFHTTPSessionManager.m in Sources */,
@@ -841,6 +881,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -851,8 +892,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -885,6 +928,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -895,8 +939,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -927,7 +973,7 @@
 				DEVELOPMENT_TEAM = EE72863AVL;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/XFPhotoBrowser/XFPhotoBrowser.pch";
 				INFOPLIST_FILE = XFPhotoBrowser/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroLu.XFPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -943,7 +989,7 @@
 				DEVELOPMENT_TEAM = EE72863AVL;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/XFPhotoBrowser/XFPhotoBrowser.pch";
 				INFOPLIST_FILE = XFPhotoBrowser/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroLu.XFPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -31,7 +31,7 @@
                         <color key="textColor" red="0.1764705882352941" green="0.1764705882352941" blue="0.1764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KFo-1O-qAj">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KFo-1O-qAj">
                         <rect key="frame" x="12" y="4" width="52" height="52"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="KFo-1O-qAj" secondAttribute="height" multiplier="1:1" id="Stw-UO-33y"/>
@@ -61,7 +61,7 @@
                 <outlet property="groupNameLabel" destination="WJh-Xv-wxh" id="aMQ-Iy-uVF"/>
                 <outlet property="photoNumberLabel" destination="xsN-GZ-j7j" id="ba6-hX-wGX"/>
             </connections>
-            <point key="canvasLocation" x="251" y="260"/>
+            <point key="canvasLocation" x="-255" y="-177"/>
         </tableViewCell>
     </objects>
 </document>

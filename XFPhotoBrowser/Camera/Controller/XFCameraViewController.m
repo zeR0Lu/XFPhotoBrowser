@@ -192,7 +192,7 @@
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"TAKEPHOTOS_REFRESHLIBRARY" object:nil];
                         
-                        XFAssetsModel *model = [XFAssetsModel getModelWithData:asset];
+                        XFAssetsModel *model = [XFAssetsModel getModelWithAsset:asset];
                         [wself.photosArray addObject:model];
                         
                         wself.lastPhotoImageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];

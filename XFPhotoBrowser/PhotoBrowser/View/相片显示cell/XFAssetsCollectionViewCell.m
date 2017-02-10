@@ -8,6 +8,7 @@
 
 #import "XFAssetsCollectionViewCell.h"
 #import "XFAssetsModel.h"
+#import "UIImageView+XFExtension.h"
 
 @interface XFAssetsCollectionViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *statusImageView;
@@ -19,14 +20,23 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    
 }
 
 - (void)setModel:(XFAssetsModel *)model {
     _model = model;
     
     self.statusImageView.hidden = !model.selected;
-    self.assetsImageView.image = model.thumbnailImage;
+    [self.assetsImageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.frame)];
 }
 
+- (IBAction)didImageAction:(UIButton *)sender {
+    
+    self.model.selected = !self.model.selected;
+    self.statusImageView.hidden = !self.model.selected;
+    
+    if ( self.didSelectImageBlock ) {
+        self.didSelectImageBlock(self.model.selected);
+    }
+}
 @end

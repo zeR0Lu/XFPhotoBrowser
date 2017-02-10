@@ -1,5 +1,5 @@
 //
-//  XFAssetsLibraryModel.h
+//  XFAssetsGroupModel.h
 //  XFPhotoBrowser
 //
 //  Created by zeroLu on 16/7/5.
@@ -8,11 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class ALAssetsGroup;
+@interface XFAssetsGroupModel : NSObject
 
-@interface XFAssetsLibraryModel : NSObject
-
-@property (strong, nonatomic) ALAssetsGroup *group;
+@property (strong, nonatomic) id group;
 /**
  *  左边的的相册首张照片
  */
@@ -28,6 +26,6 @@
 
 @property (assign, nonatomic) NSInteger groupPropertyType;
 
-+ (XFAssetsLibraryModel *)getModelWithData:(ALAssetsGroup *)data;
++ (XFAssetsGroupModel *)getModelWithData:(id)data;
 
 @end

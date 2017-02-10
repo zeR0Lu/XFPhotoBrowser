@@ -10,30 +10,21 @@
 
 @implementation XFAssetsModel
 
-+ (XFAssetsModel *)getModelWithData:(ALAsset *)data {
-    return [[self alloc] changeAssetsToModelWithAsset:data];
++ (XFAssetsModel *)getModelWithAsset:(id)asset {
+    return [[self alloc] changeAssetsToModelWithAsset:asset];
 }
 
-- (XFAssetsModel *)changeAssetsToModelWithAsset:(ALAsset *)asset {
+- (XFAssetsModel *)changeAssetsToModelWithAsset:(id)asset {
     XFAssetsModel *model = [[XFAssetsModel alloc] init];
     
-    model.modelID = [asset valueForProperty:ALAssetPropertyURLs];
+    if ( iOS8Later ) {
+        model.modelID = [(PHAsset *)asset localIdentifier];
+    } else {
+        
+        model.modelID = [(ALAsset *)asset valueForProperty:ALAssetPropertyURLs];
+    }
     
     model.asset = asset;
-    
-    model.thumbnailImage = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
-    
-//    @try {
-//        if ( asset.defaultRepresentation ) {
-//            if ( asset.defaultRepresentation.fullScreenImage ) {
-//                model.fullScreenImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-//            }
-//        }
-//    } @catch (NSException *exception) {
-//        NSLog(@"%@",exception);
-//    } @finally {
-//        
-//    }
     
     model.selected = NO;
     

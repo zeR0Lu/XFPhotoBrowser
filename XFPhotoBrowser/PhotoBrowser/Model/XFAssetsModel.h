@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
 /**
  *  图片Model
  */
@@ -17,9 +18,9 @@
  */
 @property (copy, nonatomic) NSString *modelID;
 /**
- *  原始数据
+ *  原始数据(ALAsset或PHAsset)
  */
-@property (strong, nonatomic) ALAsset *asset;
+@property (strong, nonatomic) id asset;
 /**
  *  缩略图
  */
@@ -40,6 +41,6 @@
  资源URL:ALAssetPropertyAssetURL
  资源key-value集合:ALAssetPropertyURLs//key:为uti；value:为url
  */
-+ (XFAssetsModel *)getModelWithData:(ALAsset *)asset;
++ (XFAssetsModel *)getModelWithAsset:(id)asset;
 
 @end

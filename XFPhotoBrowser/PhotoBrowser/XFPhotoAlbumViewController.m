@@ -9,11 +9,11 @@
 #import "XFPhotoAlbumViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "XFAssetsLibraryAccessFailureView.h"
-#import "XFAssetsLibraryModel.h"
+#import "XFAssetsGroupModel.h"
 #import "XFPhotoAlbumTableViewCell.h"
 #import "UIView+SDAutoLayout.h"
 #import "XFAssetsPhotoViewController.h"
-#import "SVProgressHUD.h"
+#import "XFAssetsLibraryManager.h"
 
 static NSString *identifier = @"XFPhotoAlbumTableViewCell";
 
@@ -47,10 +47,29 @@ static NSString *identifier = @"XFPhotoAlbumTableViewCell";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(didCancelBarButtonAction)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleDone target:nil action:nil];
+    
+    [self setupData];
 }
 
 - (void)didCancelBarButtonAction {
     [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (void)setupData {
+    XFWeakSelf;
+    
+    [self.dataArray removeAllObjects];
+    
+    [[XFAssetsLibraryManager shareManager] getAllAlumbGroupWithSuccess:^(NSArray<XFAssetsGroupModel *> *array) {
+        [wself.dataArray addObjectsFromArray:array];
+        
+        [wself.tableView reloadData];
+        
+    } failBlcok:^(NSError *error) {
+        XFAssetsLibraryAccessFailureView *view = [XFAssetsLibraryAccessFailureView makeView];
+        [wself.view addSubview:view];
+        view.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
+    }];
 }
 
 - (void)refreshGrouop:(NSNotification *)noti {
@@ -76,7 +95,7 @@ static NSString *identifier = @"XFPhotoAlbumTableViewCell";
     
     XFPhotoAlbumTableViewCell *cell = (XFPhotoAlbumTableViewCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     
-    XFAssetsLibraryModel *model = self.dataArray[indexPath.row];
+    XFAssetsGroupModel *model = self.dataArray[indexPath.row];
     
     [cell setupModel:model];
     
@@ -86,8 +105,9 @@ static NSString *identifier = @"XFPhotoAlbumTableViewCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     XFAssetsPhotoViewController *assetsPhotoViewController = [XFAssetsPhotoViewController new];
-    XFAssetsLibraryModel *model = self.dataArray[indexPath.row];
-    assetsPhotoViewController.assetsGroup = model.group;
+    XFAssetsGroupModel *model = self.dataArray[indexPath.row];
+    
+    assetsPhotoViewController.assetsGroupModel = model;
     [self.navigationController pushViewController:assetsPhotoViewController animated:true];
     
     [tableView deselectRowAtIndexPath:indexPath animated:true];
