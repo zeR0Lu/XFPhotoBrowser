@@ -154,7 +154,7 @@
         // 过滤只获取照片
         option.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
         
-        // 获取所有相册
+        // 获取系统生成的所有相册
         PHFetchResult<PHAssetCollection *> *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
         for (PHAssetCollection *collection in smartAlbums) {
             // 相册对象
@@ -174,7 +174,7 @@
             }
         }
         
-        // 获取所有相册
+        // 获取其他软件生成的所有相册
         PHFetchResult<PHAssetCollection *> *albums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
         for (PHAssetCollection *collection in albums) {
             // 相册对象

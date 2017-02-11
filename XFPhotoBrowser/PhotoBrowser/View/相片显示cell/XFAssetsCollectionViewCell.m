@@ -34,11 +34,16 @@
 
 - (IBAction)didImageAction:(UIButton *)sender {
     
-    self.model.selected = !self.model.selected;
-    self.statusImageView.hidden = !self.model.selected;
+//    self.model.selected = !self.model.selected;
+//    self.statusImageView.hidden = !self.model.selected;
     
     if ( self.didSelectImageBlock ) {
-        self.didSelectImageBlock(self.model.selected);
+        
+        self.didSelectImageBlock();
     }
+}
+
+- (void)refreshState {
+    self.statusImageView.hidden = !self.model.selected;
 }
 @end

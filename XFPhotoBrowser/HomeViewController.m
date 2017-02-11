@@ -210,7 +210,7 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
         }
     }else if ( 1 == buttonIndex ) {
             XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManagerWithSelectedAssets:self.dataArray.copy];
-//            browerViewController.maxPhotosNumber = 10;
+            browerViewController.maxPhotosNumber = 2;
             XFWeakSelf;
             browerViewController.callback = ^(NSArray<XFAssetsModel *> *selectedArray) {
                 [wself.dataArray removeAllObjects];

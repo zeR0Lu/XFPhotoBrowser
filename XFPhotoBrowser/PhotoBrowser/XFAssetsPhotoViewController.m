@@ -160,20 +160,26 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         XFAssetsModel *model = self.dataArray[indexPath.item - 1];
         cell.model = model;
         XFWeakSelf;
-        cell.didSelectImageBlock = ^(BOOL isSelected) {
+        __weak typeof(cell) wcell = cell;
+        cell.didSelectImageBlock = ^() {
+            
             if ( wself.browerViewController.maxPhotosNumber == 0 ) {
+                model.selected = true;
                 [wself changeDataWithIndexPath:indexPath];
             } else {
-                if ( isSelected ) {
+                if ( model.selected ) {
+                    model.selected = false;
                     [wself changeDataWithIndexPath:indexPath];
                 }else {
                     if ( wself.selectedArray.count < wself.browerViewController.maxPhotosNumber ) {
+                        model.selected = true;
                         [wself changeDataWithIndexPath:indexPath];
                     }else {
                         [XFHUD overMaxNumberWithNumber:wself.browerViewController.maxPhotosNumber];
                     }
                 }
             }
+            [wcell refreshState];
         };
         return cell;
     }
