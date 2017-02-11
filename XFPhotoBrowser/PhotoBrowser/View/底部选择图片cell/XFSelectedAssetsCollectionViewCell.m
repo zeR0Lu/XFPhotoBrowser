@@ -24,9 +24,14 @@
 }
 
 - (void)setModel:(XFAssetsModel *)model {
-    _model = model;
+    if ( [_model.modelID isEqualToString:model.modelID] ) {
+        
+    } else {
+        
+        [self.assetImageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.assetImageView.frame)];
+    }
     
-    [self.assetImageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.assetImageView.frame)];
+    _model = model;
 }
 
 - (IBAction)didDeleteButtonAction:(UIButton *)sender {

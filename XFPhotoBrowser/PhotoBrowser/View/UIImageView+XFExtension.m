@@ -11,9 +11,6 @@
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "XFAssetsLibraryManager.h"
-#import <objc/runtime.h>
-
-static char imageKey;
 
 @implementation UIImageView (XFExtension)
 
