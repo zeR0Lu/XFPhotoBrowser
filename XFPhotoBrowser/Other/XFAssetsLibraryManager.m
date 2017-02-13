@@ -88,7 +88,9 @@
             // 初始化获取相册的属性
             PHFetchOptions *option = [[PHFetchOptions alloc] init];
             // 只获取用户资源
-            option.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+            if ( iOS9Later ) {
+                option.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+            }
             // 过滤只获取照片
             option.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
             // 获取分组结果,这里为了速度我直接获取相机胶卷的相册
