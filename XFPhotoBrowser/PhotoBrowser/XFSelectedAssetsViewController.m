@@ -148,9 +148,10 @@ static NSString *identifier = @"XFSelectedAssetsCollectionViewCell";
 - (UICollectionView *)collectedView {
     if ( !_collectedView ) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.itemSize = CGSizeMake(self.collectionContainer.height - 4, self.collectionContainer.height - 4);
+        layout.itemSize = CGSizeMake(self.collectionContainer.height, self.collectionContainer.height);
         layout.minimumInteritemSpacing = 0;
-        layout.minimumLineSpacing = 0;
+        layout.minimumLineSpacing = 8;
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectedView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, XFScreenWidth - 84, 76) collectionViewLayout:layout];
         _collectedView.backgroundColor = [UIColor clearColor];

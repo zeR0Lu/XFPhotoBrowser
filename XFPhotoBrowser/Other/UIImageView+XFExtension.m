@@ -51,10 +51,12 @@
         [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(pixelWidth,pixelHeight) contentMode:PHImageContentModeAspectFit options:imageREquestOptions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
             if ( result ) {
-                [GCDQueue executeInMainQueue:^{
-                    XFStrongSelf;
-                    sself.image = result;
-                }];
+                if ( ![result isEqual:wself.image] ) {
+                    [GCDQueue executeInMainQueue:^{
+                        XFStrongSelf;
+                        sself.image = result;
+                    }];
+                }
             }
         }];
     } else if ([asset isKindOfClass:[ALAsset class]]) {
