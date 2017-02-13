@@ -10,13 +10,15 @@
 #import "XFAssetsModel.h"
 #import "XFSelectedAssetsCollectionViewCell.h"
 #import "XFPreviewViewController.h"
+#import "SDAutoLayout.h"
 
 static NSString *identifier = @"XFSelectedAssetsCollectionViewCell";
 
 @interface XFSelectedAssetsViewController ()
-@property (weak, nonatomic) IBOutlet UICollectionView *collectedView;
+@property (strong, nonatomic) UICollectionView *collectedView;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
+@property (weak, nonatomic) IBOutlet UIView *collectionContainer;
 
 @property (strong, nonatomic) NSMutableArray *dataArray;
 @end
@@ -31,7 +33,6 @@ static NSString *identifier = @"XFSelectedAssetsCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.collectedView registerNib:[UINib nibWithNibName:identifier bundle:nil] forCellWithReuseIdentifier:identifier];
     self.confirmButton.titleLabel.numberOfLines = 0;
 }
 
@@ -56,6 +57,10 @@ static NSString *identifier = @"XFSelectedAssetsCollectionViewCell";
 - (void)addModelWithData:(NSArray<XFAssetsModel *> *)data {
     XFWeakSelf;
     
+//    [self.dataArray removeAllObjects];
+//    [self.dataArray addObjectsFromArray:data];
+//    [self.collectedView reloadData];
+//    [self setupButtonTitle];
     [self.collectedView performBatchUpdates:^{
         NSMutableArray *tempArray = [NSMutableArray array];
         for ( int i = 0; i < data.count ; i++ ) {
@@ -137,6 +142,26 @@ static NSString *identifier = @"XFSelectedAssetsCollectionViewCell";
         [wself.collectedView reloadData];
     };
     [self.navigationController pushViewController:previewViewController animated:true];
+}
+
+#pragma mark - lazy
+- (UICollectionView *)collectedView {
+    if ( !_collectedView ) {
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        layout.itemSize = CGSizeMake(self.collectionContainer.height - 4, self.collectionContainer.height - 4);
+        layout.minimumInteritemSpacing = 0;
+        layout.minimumLineSpacing = 0;
+        
+        _collectedView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, XFScreenWidth - 84, 76) collectionViewLayout:layout];
+        _collectedView.backgroundColor = [UIColor clearColor];
+        _collectedView.delegate = self;
+        _collectedView.dataSource = self;
+        [self.collectionContainer addSubview:_collectedView];
+        _collectedView.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
+        
+        [_collectedView registerNib:[UINib nibWithNibName:identifier bundle:nil] forCellWithReuseIdentifier:identifier];
+    }
+    return _collectedView;
 }
 
 - (NSMutableArray *)dataArray {

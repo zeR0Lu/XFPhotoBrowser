@@ -26,6 +26,8 @@
 static NSString *firstItemIdentifier = @"XFTakePhotoCollectionViewCell";
 static NSString *aidentifier = @"XFAssetsCollectionViewCell";
 
+#define itemWidth ((XFScreenWidth - 4 * 5)/4)
+
 @interface XFAssetsPhotoViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
@@ -46,7 +48,12 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     [self setupUI];
+    
+    if ( self.browerViewController.selectedAssets.count ) {
+        [self setupSelectedAsset];
+    }
 }
 
 - (void)setupUI {
@@ -75,8 +82,6 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         [wself.dataArray removeAllObjects];
         [wself.dataArray addObjectsFromArray:array];
         [wself.collectionView reloadData];
-        
-        [wself setupSelectedAsset];
     }];
 }
 
@@ -200,6 +205,10 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     }else {
         
     }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(itemWidth, itemWidth);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
