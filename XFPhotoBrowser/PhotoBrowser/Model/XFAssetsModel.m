@@ -17,7 +17,7 @@
 - (XFAssetsModel *)changeAssetsToModelWithAsset:(id)asset {
     XFAssetsModel *model = [[XFAssetsModel alloc] init];
     
-    if ( iOS8Later ) {
+    if ( [asset isKindOfClass:[PHAsset class]] ) {
         model.modelID = [(PHAsset *)asset localIdentifier];
     } else {
         
