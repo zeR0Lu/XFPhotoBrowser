@@ -309,44 +309,6 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
     }
 }
 
-//- (void)saveImageToXYAlbum:(UIImage*)image completion:(SaveImageCompletion)completion
-//{
-//    if(image){
-//        __weak ALAssetsLibrary *weakAssetsLibrary = assetsLibrary;
-//        __weak XYWallPaperHelper *weakSelf = self;
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            if(TT_IS_IOS8_AND_UP){
-//                PHPhotoLibrary* photoLibrary = [PHPhotoLibrary sharedPhotoLibrary];
-//                [photoLibrary performChanges:^{
-//                    PHFetchResult* fetchCollectionResult;
-//                    PHAssetCollectionChangeRequest* collectionRequest;
-//                    NSString *albumIdentifier = [weakSelf xyWallPaperAlbumIdentifier];
-//                    if(albumIdentifier){
-//                        fetchCollectionResult = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[albumIdentifier] options:nil];
-//                        PHAssetCollection* exisitingCollection = fetchCollectionResult.firstObject;
-//                        collectionRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:exisitingCollection];
-//                    }else{
-//                        fetchCollectionResult = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[XYWallPaperAlbum] options:nil];
-//                        // Create a new album
-//                        if ( !fetchCollectionResult || fetchCollectionResult.count==0 ){
-//                            collectionRequest = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:XYWallPaperAlbum];
-//                            [weakSelf saveXYWallPaperAblumIdentifier:collectionRequest.placeholderForCreatedAssetCollection.localIdentifier];
-//                        }
-//                    }
-//                    PHAssetChangeRequest* createAssetRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-//                    [collectionRequest addAssets:@[createAssetRequest.placeholderForCreatedAsset]];
-//                    
-//                } completionHandler:^(BOOL success, NSError *error){
-//                    completion(error);
-//                }];
-//            }else{
-//                [weakAssetsLibrary saveImage:image toAlbum:XYWallPaperAlbum withCompletionBlock:completion];
-//            }
-//        });
-//    }
-//}
-
 //压缩图片质量
 -(UIImage *)reduceImage:(UIImage *)image percent:(float)percent
 {

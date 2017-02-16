@@ -52,7 +52,7 @@
                   moduleName = "XFPhotoBrowser"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/boai/%E5%8D%9A%E7%88%B1%E8%B5%84%E6%96%99/%E6%9C%89%E4%BA%BA%E5%85%AC%E5%8F%B8%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE/%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE/XFPhotoBrowser/XFPhotoBrowser/Camera/Controller/XFCameraViewController.m"
-                  timestampString = "508929687.346732"
+                  timestampString = "508931612.827741"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "196"
@@ -67,7 +67,7 @@
                   moduleName = "XFPhotoBrowser"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/boai/%E5%8D%9A%E7%88%B1%E8%B5%84%E6%96%99/%E6%9C%89%E4%BA%BA%E5%85%AC%E5%8F%B8%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE/%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE/XFPhotoBrowser/XFPhotoBrowser/Camera/Controller/XFCameraViewController.m"
-                  timestampString = "508929687.348177"
+                  timestampString = "508931612.829109"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "197"
@@ -139,6 +139,86 @@
             endingLineNumber = "123"
             landmarkName = "-selectButton:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XFPhotoBrowser/Camera/Controller/XFCameraViewController.m"
+            timestampString = "508930235.524971"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XFPhotoBrowser/Other/XFAssetsLibraryManager.m"
+            timestampString = "508931224.066326"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "-getCameraGroupWithSuccess:failBlcok:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XFPhotoBrowser/Other/XFAssetsLibraryManager.m"
+            timestampString = "508930904.605283"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "-getCameraGroupWithSuccess:failBlcok:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[XFAssetsLibraryManager getCameraGroupWithSuccess:failBlcok:]"
+                  moduleName = "XFPhotoBrowser"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/boai/%E5%8D%9A%E7%88%B1%E8%B5%84%E6%96%99/%E6%9C%89%E4%BA%BA%E5%85%AC%E5%8F%B8%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE/%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE/XFPhotoBrowser/XFPhotoBrowser/Other/XFAssetsLibraryManager.m"
+                  timestampString = "508931612.846124"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "1168">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__62-[XFAssetsLibraryManager getCameraGroupWithSuccess:failBlcok:]_block_invoke"
+                  moduleName = "XFPhotoBrowser"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/boai/%E5%8D%9A%E7%88%B1%E8%B5%84%E6%96%99/%E6%9C%89%E4%BA%BA%E5%85%AC%E5%8F%B8%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE/%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE/XFPhotoBrowser/XFPhotoBrowser/Other/XFAssetsLibraryManager.m"
+                  timestampString = "508931612.84745"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "121"
+                  endingLineNumber = "121"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

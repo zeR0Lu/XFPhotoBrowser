@@ -110,6 +110,10 @@
                     success(model);
                 }
             }
+            else
+            {
+                NSLog(@"返回相册2");
+            }
         } else {
             ALAssetsFilter *assetsFilter = [ALAssetsFilter allPhotos];
             

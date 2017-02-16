@@ -28,7 +28,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
 
 #define itemWidth ((XFScreenWidth - 4 * 5)/4)
 
-@interface XFAssetsPhotoViewController ()
+@interface XFAssetsPhotoViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 
@@ -205,11 +205,22 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         [self presentViewController:cameraViewController animated:true completion:nil];
          */
         
-        UIImagePickerController *cameraVC=[[UIImagePickerController alloc]init];
-        cameraVC.sourceType=UIImagePickerControllerSourceTypeCamera;
-        [self presentViewController:cameraVC animated:true completion:^{
-            
-        }];
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.delegate = self;
+        //设置拍照后的图片可被编辑
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        //先检查相机可用是否
+        BOOL cameraIsAvailable = [self checkCamera];
+        if (YES == cameraIsAvailable) {
+            [self presentViewController:picker animated:YES completion:^{
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+            }];
+        }else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请在iPhone的“设置-隐私-相机”选项中，允许本应用程序访问你的相机。" delegate:self cancelButtonTitle:@"好，我知道了" otherButtonTitles:nil];
+            [alert show];
+        }
 
         
     }else {
@@ -223,6 +234,102 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(4.f, 4.f, 4.f, 4.f);
+}
+
+#pragma mark -
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    //    [picker dismissViewControllerAnimated:YES completion:^{
+    ////        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    ////        NSString *url = @"http://www.zgjc678.com/jichuang/api/index.php/Index/uploads";
+    ////        //这里可以自己在封装一层动态设置图片压缩的比例,动态选择上传的图片是缩略图或者原图,也可以直接进入上传方法里面修改
+    ////        [BANetManager ba_uploadImageWithUrlString:url parameters:nil withImageArray:@[image] withSuccessBlock:^(id response) {
+    ////
+    ////        } withFailurBlock:^(NSError *error) {
+    ////
+    ////        } withUpLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+    ////
+    ////        }];
+    //    }];
+    
+    
+    NSLog(@"info: %@", info);
+    
+    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    //当选择的类型是图片
+    if ([type isEqualToString:@"public.image"])
+    {
+        NSString *key = nil;
+        
+        if (picker.allowsEditing)
+        {
+            key = UIImagePickerControllerEditedImage;
+        }
+        else
+        {
+            key = UIImagePickerControllerOriginalImage;
+        }
+        //获取图片
+        UIImage *image = [info objectForKey:key];
+        
+        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            // 固定方向
+            //压缩图片质量
+            image = [self reduceImage:image percent:0.1];
+            CGSize imageSize = image.size;
+            imageSize.height = 320;
+            imageSize.width = 320;
+            //压缩图片尺寸
+            image = [self imageWithImageSimple:image scaledToSize:imageSize];
+        }
+        //上传到服务器
+        //[self doAddPhoto:image];
+        
+        XFAssetsModel *model = [XFAssetsModel new];
+        model.thumbnailImage = image;
+        model.asset = image;
+        [self.dataArray addObject:model];
+        [self.selectedArray addObject:model];
+        [self.selectedAssetsView addModelWithData:@[model]];
+        [self.collectionView reloadData];
+        
+        //关闭相册界面
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
+}
+
+//压缩图片质量
+-(UIImage *)reduceImage:(UIImage *)image percent:(float)percent
+{
+    NSData *imageData = UIImageJPEGRepresentation(image, percent);
+    UIImage *newImage = [UIImage imageWithData:imageData];
+    return newImage;
+}
+//压缩图片尺寸
+- (UIImage*)imageWithImageSimple:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+//检查相机是否可用
+- (BOOL)checkCamera
+{
+    NSString *mediaType = AVMediaTypeVideo;
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    if(AVAuthorizationStatusRestricted == authStatus ||
+       AVAuthorizationStatusDenied == authStatus)
+    {
+        //相机不可用
+        return NO;
+    }
+    //相机可用
+    return YES;
 }
 
 #pragma mark - 处理选择和取消选中的数据模型
