@@ -97,7 +97,11 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     [[XFAssetsLibraryManager shareManager] getAllAlumbGroupWithSuccess:^(NSArray<XFAssetsGroupModel *> *array) {
         [wself.groupArray addObjectsFromArray:array];
         // 设置当前页面的标题
+<<<<<<< HEAD
 //        wself.title = [[wself.groupArray.firstObject group] valueForProperty:ALAssetsGroupPropertyName];
+=======
+        wself.title = [[wself.groupArray.firstObject group] valueForProperty:ALAssetsGroupPropertyName];
+>>>>>>> master
         // 根据分组默认获取第一组的照片
         [[XFAssetsLibraryManager shareManager] getAssetsWithGroupModel:wself.groupArray.firstObject selectAssets:nil successBlock:^(NSArray *array, BOOL stop) {
             
@@ -205,6 +209,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         [self presentViewController:cameraViewController animated:true completion:nil];
          */
         
+<<<<<<< HEAD
         UIImagePickerController *cameraVC=[[UIImagePickerController alloc]init];
         cameraVC.sourceType=UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:cameraVC animated:true completion:^{
@@ -214,6 +219,8 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
         
     }else {
         
+=======
+>>>>>>> master
     }
 }
 

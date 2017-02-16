@@ -17,6 +17,7 @@
 - (XFAssetsModel *)changeAssetsToModelWithAsset:(id)asset {
     XFAssetsModel *model = [[XFAssetsModel alloc] init];
     
+<<<<<<< HEAD
     if ( iOS8Later ) {
         if ([asset isKindOfClass:[PHAsset class]]) {
             model.modelID = [(PHAsset *)asset localIdentifier];
@@ -44,6 +45,15 @@
     
     }
         
+=======
+    if ( [asset isKindOfClass:[PHAsset class]] ) {
+        model.modelID = [(PHAsset *)asset localIdentifier];
+    } else {
+        
+        model.modelID = [(ALAsset *)asset valueForProperty:ALAssetPropertyURLs];
+    }
+    
+>>>>>>> master
     model.asset = asset;
     
     model.selected = NO;
