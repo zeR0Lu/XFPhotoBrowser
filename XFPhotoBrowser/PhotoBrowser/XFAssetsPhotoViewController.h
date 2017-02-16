@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class XFAssetsGroupModel,XFBrowerViewController;
 
-@interface XFAssetsPhotoViewController : UIViewController <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface XFAssetsPhotoViewController : UIViewController <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 /** 导航栏 */
 @property (strong, nonatomic) XFBrowerViewController *browerViewController;

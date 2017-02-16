@@ -24,6 +24,7 @@
 }
 
 - (void)setModel:(XFAssetsModel *)model {
+<<<<<<< HEAD
     if ([model.modelID isKindOfClass:[NSString class]]) {
         if ([ _model.modelID  isEqualToString:model.modelID ]) {
             
@@ -42,6 +43,16 @@
         }
         
     }    _model = model;
+=======
+    if ( [_model.modelID isEqualToString:model.modelID] ) {
+        
+    } else {
+        
+        [self.assetImageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.assetImageView.frame)];
+    }
+    
+    _model = model;
+>>>>>>> master
 }
 
 - (IBAction)didDeleteButtonAction:(UIButton *)sender {

@@ -97,7 +97,7 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
     [[XFAssetsLibraryManager shareManager] getAllAlumbGroupWithSuccess:^(NSArray<XFAssetsGroupModel *> *array) {
         [wself.groupArray addObjectsFromArray:array];
         // 设置当前页面的标题
-//        wself.title = [[wself.groupArray.firstObject group] valueForProperty:ALAssetsGroupPropertyName];
+        wself.title = [[wself.groupArray.firstObject group] valueForProperty:ALAssetsGroupPropertyName];
         // 根据分组默认获取第一组的照片
         [[XFAssetsLibraryManager shareManager] getAssetsWithGroupModel:wself.groupArray.firstObject selectAssets:nil successBlock:^(NSArray *array, BOOL stop) {
             
@@ -222,9 +222,11 @@ static NSString *aidentifier = @"XFAssetsCollectionViewCell";
             [alert show];
         }
 
+
         
     }else {
         
+
     }
 }
 

@@ -200,6 +200,7 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ( 0 == buttonIndex ) {
         if ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES ) {
+<<<<<<< HEAD
 //            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
 //            imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
 //            imagePicker.delegate = self;
@@ -229,6 +230,20 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
     }else if ( 1 == buttonIndex ) {
             XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManagerWithSelectedAssets:self.dataArray.copy];
             browerViewController.maxPhotosNumber = 3;
+=======
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
+            imagePicker.delegate = self;
+            imagePicker.videoQuality = UIImagePickerControllerQualityTypeLow;
+            imagePicker.allowsEditing = YES;
+            [self presentViewController:imagePicker animated:YES completion:^{
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+            }];
+        }
+    }else if ( 1 == buttonIndex ) {
+            XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManagerWithSelectedAssets:self.dataArray.copy];
+            browerViewController.maxPhotosNumber = 2;
+>>>>>>> master
             XFWeakSelf;
             browerViewController.callback = ^(NSArray<XFAssetsModel *> *selectedArray) {
                 [wself.dataArray removeAllObjects];

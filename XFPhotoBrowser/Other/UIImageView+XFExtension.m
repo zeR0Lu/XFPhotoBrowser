@@ -82,6 +82,7 @@
             }
         }];
     }
+<<<<<<< HEAD
     else if ([asset isKindOfClass:[UIImage class]]) {
         [GCDQueue executeInGlobalQueue:^{
             
@@ -103,5 +104,7 @@
             }
         }];
     }
+=======
+>>>>>>> master
 }
 @end
