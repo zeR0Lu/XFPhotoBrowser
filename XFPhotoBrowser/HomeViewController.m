@@ -17,7 +17,6 @@
 #import "BANetManager.h"
 #import "XFPreviewViewController.h"
 
-#import "ZYQAssetPickerController.h"
 
 static NSString *identifier = @"XFHomeCollectionViewCell";
 
