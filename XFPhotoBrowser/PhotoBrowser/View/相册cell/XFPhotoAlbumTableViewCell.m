@@ -7,7 +7,9 @@
 //
 
 #import "XFPhotoAlbumTableViewCell.h"
-#import "XFAssetsLibraryModel.h"
+#import "XFAssetsGroupModel.h"
+#import <Photos/Photos.h>
+#import "UIImageView+XFExtension.h"
 
 @interface XFPhotoAlbumTableViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *groupImageView;
@@ -24,10 +26,11 @@
     
 }
 
-- (void)setupModel:(XFAssetsLibraryModel *)model {
-    self.groupImageView.image = model.image;
-    self.photoNumberLabel.text = [NSString stringWithFormat:@"%@张",model.photosNumber];
+- (void)setupModel:(XFAssetsGroupModel *)model {
+    
+    [self.groupImageView xf_setImageWithAsset:([model.group count] == 0)?nil:[model.group lastObject] containerWidth:CGRectGetWidth(self.groupImageView.frame)];
     self.groupNameLabel.text = model.groupName;
+    self.photoNumberLabel.text = [NSString stringWithFormat:@"%@张",model.photosNumber];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

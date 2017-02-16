@@ -8,7 +8,7 @@
 
 #import "XFHomeCollectionViewCell.h"
 #import "XFAssetsModel.h"
-
+#import "UIImageView+XFExtension.h"
 @interface XFHomeCollectionViewCell ()
 
 
@@ -28,7 +28,7 @@
 
 - (void)setupModel:(XFAssetsModel *)model index:(NSInteger)index {
     self.model = model;
-    self.imageView.image = model.thumbnailImage;
+    [self.imageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.imageView.bounds)];
     self.imageView.tag = index;
 }
 

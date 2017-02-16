@@ -114,7 +114,14 @@
 - (IBAction)didBackButtonAction:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
+- (IBAction)selectButton:(id)sender {
+    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TAKEPHOTOS_REFRESHLIBRARY" object:nil];
+    
+    //    });
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark - 初始化照相机
 - (void)initAVCaptureSession{
     
@@ -192,10 +199,10 @@
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"TAKEPHOTOS_REFRESHLIBRARY" object:nil];
                         
-                        XFAssetsModel *model = [XFAssetsModel getModelWithData:asset];
+                        XFAssetsModel *model = [XFAssetsModel getModelWithAsset:asset];
                         [wself.photosArray addObject:model];
                         
-                        wself.lastPhotoImageView.image = [UIImage imageWithCGImage:asset.thumbnail];
+                        wself.lastPhotoImageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
                         wself.takePhotosNumberLabel.text = wself.photosArray.count?@(wself.photosArray.count).stringValue:@"";
                         
                         if ( wself.takePhotosBlock ) {

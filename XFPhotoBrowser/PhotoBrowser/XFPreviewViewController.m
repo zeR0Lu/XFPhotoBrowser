@@ -37,16 +37,7 @@
     [super viewDidAppear:YES];
     
     [self.dataArray removeAllObjects];
-    for ( XFAssetsModel *model in self.assetsArray ) {
-        if (model.asset)
-        {
-            [self.dataArray addObject:[UIImage imageWithCGImage:model.asset.defaultRepresentation.fullScreenImage]];
-        }
-        else
-        {
-            [self.dataArray addObject:model.thumbnailImage];
-        }
-    }
+    [self.dataArray addObjectsFromArray:self.assetsArray.copy];
     [self.collectionView reloadData];
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.showIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
     self.title = [NSString stringWithFormat:@"%.0ld/%ld",(long)self.showIndex + 1,self.dataArray.count];
@@ -86,7 +77,8 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     XFPreviewCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ReuseIdentifier forIndexPath:indexPath];
-    [cell setupWithImage:self.dataArray[indexPath.item]];
+    XFAssetsModel *model = self.dataArray[indexPath.item];
+    cell.model = model;
     XFWeakSelf;
     cell.tapImageViewBlock = ^() {
         wself.navHid = !wself.navHid;
@@ -98,7 +90,6 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-//    NSLog(@"%@======%@",NSStringFromCGPoint(velocity),NSStringFromCGPoint(*targetContentOffset));
     
     NSInteger currentIndex = targetContentOffset->x/XFScreenWidth;
     self.title = [NSString stringWithFormat:@"%.0ld/%ld",(long)currentIndex + 1,self.dataArray.count];

@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ALAssetsGroup;
+@class XFAssetsGroupModel,XFBrowerViewController;
 
 @interface XFAssetsPhotoViewController : UIViewController <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) ALAssetsGroup *assetsGroup;
+/** 导航栏 */
+@property (strong, nonatomic) XFBrowerViewController *browerViewController;
+
+@property (nonatomic, strong) XFAssetsGroupModel *assetsGroupModel;
 
 @end

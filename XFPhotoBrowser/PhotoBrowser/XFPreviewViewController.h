@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class XFAssetsModel;
+
 typedef void(^DeleteImageBlock)(NSInteger index);
 
 @interface XFPreviewViewController : UIViewController <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
-@property (strong, nonatomic) NSMutableArray *assetsArray;
+@property (strong, nonatomic) NSMutableArray<XFAssetsModel *> *assetsArray;
 
 @property (assign, nonatomic) NSInteger showIndex;
 

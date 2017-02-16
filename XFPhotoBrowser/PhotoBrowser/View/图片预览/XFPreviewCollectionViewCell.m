@@ -7,6 +7,8 @@
 //
 
 #import "XFPreviewCollectionViewCell.h"
+#import "UIImageView+XFExtension.h"
+#import "XFAssetsModel.h"
 
 @interface XFPreviewCollectionViewCell ()
 
@@ -31,8 +33,8 @@
     }
 }
 
-- (void)setupWithImage:(UIImage *)image {
-    self.imageView.image = image;
+- (void)setModel:(XFAssetsModel *)model {
+    [self.imageView xf_setImageWithAsset:model.asset containerWidth:[UIScreen mainScreen].bounds.size.width];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {

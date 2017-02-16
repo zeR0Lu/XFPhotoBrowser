@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class XFAssetsModel;
+
 typedef void(^TapImageViewBlock)();
 
 static NSString *ReuseIdentifier = @"XFPreviewCollectionViewCell";
@@ -16,6 +18,6 @@ static NSString *ReuseIdentifier = @"XFPreviewCollectionViewCell";
 
 @property (copy, nonatomic) TapImageViewBlock tapImageViewBlock;
 
-- (void)setupWithImage:(UIImage *)image;
+@property (nonatomic, strong) XFAssetsModel *model;
 
 @end

@@ -9,6 +9,9 @@
 #import "XFBrowerViewController.h"
 #import "XFPhotoAlbumViewController.h"
 #import "XFAssetsPhotoViewController.h"
+#import "XFAssetsLibraryManager.h"
+#import "XFAssetsLibraryAccessFailureView.h"
+#import "SDAutoLayout.h"
 
 @interface XFBrowerViewController ()
 
@@ -23,15 +26,34 @@
     NSDictionary *titleTextAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17.f],NSFontAttributeName,nil];
     self.navigationBar.titleTextAttributes = titleTextAttributesDict;
     self.navigationBar.tintColor = [UIColor whiteColor];
+    
+    
 }
 
 - (void)didCancelBarButtonAction {
     [self.parentViewController dismissViewControllerAnimated:true completion:nil];
 }
 
-+ (instancetype)shareBrowerManager {
-    XFBrowerViewController *nav = [[self alloc] initWithRootViewController:[XFPhotoAlbumViewController new]];
-    [nav pushViewController:[XFAssetsPhotoViewController new] animated:NO];
++ (instancetype)shareBrowerManagerWithSelectedAssets:(NSArray<XFAssetsModel *> *)selectedAssets {
+    
+    XFPhotoAlbumViewController *alumbVC = [XFPhotoAlbumViewController new];
+    
+    XFBrowerViewController *nav = [[self alloc] initWithRootViewController:alumbVC];
+    nav.selectedAssets = selectedAssets;
+    
+    XFAssetsPhotoViewController *photoVC = [XFAssetsPhotoViewController new];
+    photoVC.browerViewController = nav;
+    
+    [[XFAssetsLibraryManager shareManager] getCameraGroupWithSuccess:^(XFAssetsGroupModel *model) {
+        photoVC.assetsGroupModel = model;
+        
+        [nav pushViewController:photoVC animated:NO];
+    } failBlcok:^{
+        XFAssetsLibraryAccessFailureView *view = [XFAssetsLibraryAccessFailureView makeView];
+        [alumbVC.view addSubview:view];
+        view.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
+    }];
+    
     return nav;
 }
 

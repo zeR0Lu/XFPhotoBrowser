@@ -17,6 +17,8 @@
 #import "BANetManager.h"
 #import "XFPreviewViewController.h"
 
+#import "ZYQAssetPickerController.h"
+
 static NSString *identifier = @"XFHomeCollectionViewCell";
 
 @interface HomeViewController ()
@@ -199,46 +201,183 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ( 0 == buttonIndex ) {
         if ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES ) {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
-            imagePicker.delegate = self;
-            imagePicker.videoQuality = UIImagePickerControllerQualityTypeLow;
+//            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+//            imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
+//            imagePicker.delegate = self;
+//            imagePicker.videoQuality = UIImagePickerControllerQualityTypeLow;
 //            imagePicker.allowsEditing = YES;
-            [self presentViewController:imagePicker animated:YES completion:^{
-                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-            }];
+//            [self presentViewController:imagePicker animated:YES completion:^{
+//                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+//            }];
+            
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            picker.delegate = self;
+            //设置拍照后的图片可被编辑
+            picker.allowsEditing = YES;
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            //先检查相机可用是否
+            BOOL cameraIsAvailable = [self checkCamera];
+            if (YES == cameraIsAvailable) {
+                [self presentViewController:picker animated:YES completion:^{
+                    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+                }];
+            }else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请在iPhone的“设置-隐私-相机”选项中，允许本应用程序访问你的相机。" delegate:self cancelButtonTitle:@"好，我知道了" otherButtonTitles:nil];
+                [alert show];
+            }
         }
     }else if ( 1 == buttonIndex ) {
-//        [XFHUD showInOpenLibary];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManager];
-//            browerViewController.maxPhotosNumber = 10;
-            browerViewController.selectedAssets = [NSArray arrayWithArray:[self.dataArray copy]];
+            XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManagerWithSelectedAssets:self.dataArray.copy];
+            browerViewController.maxPhotosNumber = 3;
             XFWeakSelf;
-            browerViewController.callback = ^(NSArray *selectedArray) {
+            browerViewController.callback = ^(NSArray<XFAssetsModel *> *selectedArray) {
                 [wself.dataArray removeAllObjects];
                 [wself.dataArray addObjectsFromArray:selectedArray];
                 [wself.collectionView reloadData];
             };
+            /**
+             这里可以选择需要返回的数据直接就是原图,2个回调最好选择1个
+             browerViewController.getImageBlock = ^(NSArray<UIImage *> *selectedImageArray) {
+             
+             };
+             */
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self presentViewController:browerViewController animated:true completion:nil];
-//        });
+        });
     }
 }
 
 #pragma mark -
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    [picker dismissViewControllerAnimated:YES completion:^{
-//        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-//        NSString *url = @"http://www.zgjc678.com/jichuang/api/index.php/Index/uploads";
-//        //这里可以自己在封装一层动态设置图片压缩的比例,动态选择上传的图片是缩略图或者原图,也可以直接进入上传方法里面修改
-//        [BANetManager ba_uploadImageWithUrlString:url parameters:nil withImageArray:@[image] withSuccessBlock:^(id response) {
-//         
-//        } withFailurBlock:^(NSError *error) {
-//         
-//        } withUpLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
-//         
-//        }];
-    }];
+//    [picker dismissViewControllerAnimated:YES completion:^{
+////        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+////        NSString *url = @"http://www.zgjc678.com/jichuang/api/index.php/Index/uploads";
+////        //这里可以自己在封装一层动态设置图片压缩的比例,动态选择上传的图片是缩略图或者原图,也可以直接进入上传方法里面修改
+////        [BANetManager ba_uploadImageWithUrlString:url parameters:nil withImageArray:@[image] withSuccessBlock:^(id response) {
+////         
+////        } withFailurBlock:^(NSError *error) {
+////         
+////        } withUpLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+////         
+////        }];
+//    }];
+    
+    
+    NSLog(@"info: %@", info);
+
+    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    //当选择的类型是图片
+    if ([type isEqualToString:@"public.image"])
+    {
+        NSString *key = nil;
+        
+        if (picker.allowsEditing)
+        {
+            key = UIImagePickerControllerEditedImage;
+        }
+        else
+        {
+            key = UIImagePickerControllerOriginalImage;
+        }
+        //获取图片
+        UIImage *image = [info objectForKey:key];
+        
+        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            // 固定方向
+            //压缩图片质量
+            image = [self reduceImage:image percent:0.1];
+            CGSize imageSize = image.size;
+            imageSize.height = 320;
+            imageSize.width = 320;
+            //压缩图片尺寸
+            image = [self imageWithImageSimple:image scaledToSize:imageSize];
+        }
+        //上传到服务器
+        //[self doAddPhoto:image];
+        
+        XFAssetsModel *model = [XFAssetsModel new];
+        model.thumbnailImage = image;
+        model.asset = image;
+        [self.dataArray addObject:model];
+        [self.collectionView reloadData];
+
+        //关闭相册界面
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
+}
+
+//- (void)saveImageToXYAlbum:(UIImage*)image completion:(SaveImageCompletion)completion
+//{
+//    if(image){
+//        __weak ALAssetsLibrary *weakAssetsLibrary = assetsLibrary;
+//        __weak XYWallPaperHelper *weakSelf = self;
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            
+//            if(TT_IS_IOS8_AND_UP){
+//                PHPhotoLibrary* photoLibrary = [PHPhotoLibrary sharedPhotoLibrary];
+//                [photoLibrary performChanges:^{
+//                    PHFetchResult* fetchCollectionResult;
+//                    PHAssetCollectionChangeRequest* collectionRequest;
+//                    NSString *albumIdentifier = [weakSelf xyWallPaperAlbumIdentifier];
+//                    if(albumIdentifier){
+//                        fetchCollectionResult = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[albumIdentifier] options:nil];
+//                        PHAssetCollection* exisitingCollection = fetchCollectionResult.firstObject;
+//                        collectionRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:exisitingCollection];
+//                    }else{
+//                        fetchCollectionResult = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[XYWallPaperAlbum] options:nil];
+//                        // Create a new album
+//                        if ( !fetchCollectionResult || fetchCollectionResult.count==0 ){
+//                            collectionRequest = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:XYWallPaperAlbum];
+//                            [weakSelf saveXYWallPaperAblumIdentifier:collectionRequest.placeholderForCreatedAssetCollection.localIdentifier];
+//                        }
+//                    }
+//                    PHAssetChangeRequest* createAssetRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+//                    [collectionRequest addAssets:@[createAssetRequest.placeholderForCreatedAsset]];
+//                    
+//                } completionHandler:^(BOOL success, NSError *error){
+//                    completion(error);
+//                }];
+//            }else{
+//                [weakAssetsLibrary saveImage:image toAlbum:XYWallPaperAlbum withCompletionBlock:completion];
+//            }
+//        });
+//    }
+//}
+
+//压缩图片质量
+-(UIImage *)reduceImage:(UIImage *)image percent:(float)percent
+{
+    NSData *imageData = UIImageJPEGRepresentation(image, percent);
+    UIImage *newImage = [UIImage imageWithData:imageData];
+    return newImage;
+}
+//压缩图片尺寸
+- (UIImage*)imageWithImageSimple:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+//检查相机是否可用
+- (BOOL)checkCamera
+{
+    NSString *mediaType = AVMediaTypeVideo;
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    if(AVAuthorizationStatusRestricted == authStatus ||
+       AVAuthorizationStatusDenied == authStatus)
+    {
+        //相机不可用
+        return NO;
+    }
+    //相机可用
+    return YES;
 }
 
 #pragma mark - 懒加载
@@ -249,9 +388,9 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
         _dataArray = [NSMutableArray array];
         
         /*! 此处是默认添加第一张图片，不需要的可以直接删掉！ */
-        XFAssetsModel *model = [XFAssetsModel new];
-        model.thumbnailImage = [UIImage imageNamed:@"Assets_Selected"];
-        [_dataArray addObject:model];
+//        XFAssetsModel *model = [XFAssetsModel new];
+//        model.thumbnailImage = [UIImage imageNamed:@"Assets_Selected"];
+//        [_dataArray addObject:model];
     }
     return _dataArray;
 }
