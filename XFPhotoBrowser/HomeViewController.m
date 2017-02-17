@@ -200,37 +200,37 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ( 0 == buttonIndex ) {
         if ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES ) {
-<<<<<<< HEAD
-//            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-//            imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
-//            imagePicker.delegate = self;
-//            imagePicker.videoQuality = UIImagePickerControllerQualityTypeLow;
-//            imagePicker.allowsEditing = YES;
-//            [self presentViewController:imagePicker animated:YES completion:^{
-//                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-//            }];
-            
-            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            picker.delegate = self;
-            //设置拍照后的图片可被编辑
-            picker.allowsEditing = YES;
-            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            //先检查相机可用是否
-            BOOL cameraIsAvailable = [self checkCamera];
-            if (YES == cameraIsAvailable) {
-                [self presentViewController:picker animated:YES completion:^{
-                    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-                }];
-            }else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请在iPhone的“设置-隐私-相机”选项中，允许本应用程序访问你的相机。" delegate:self cancelButtonTitle:@"好，我知道了" otherButtonTitles:nil];
-                [alert show];
-            }
-        }
-    }else if ( 1 == buttonIndex ) {
-            XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManagerWithSelectedAssets:self.dataArray.copy];
-            browerViewController.maxPhotosNumber = 3;
-=======
+//<<<<<<< HEAD
+////            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+////            imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
+////            imagePicker.delegate = self;
+////            imagePicker.videoQuality = UIImagePickerControllerQualityTypeLow;
+////            imagePicker.allowsEditing = YES;
+////            [self presentViewController:imagePicker animated:YES completion:^{
+////                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+////            }];
+//            
+//            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+//            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+//            picker.delegate = self;
+//            //设置拍照后的图片可被编辑
+//            picker.allowsEditing = YES;
+//            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+//            //先检查相机可用是否
+//            BOOL cameraIsAvailable = [self checkCamera];
+//            if (YES == cameraIsAvailable) {
+//                [self presentViewController:picker animated:YES completion:^{
+//                    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+//                }];
+//            }else {
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请在iPhone的“设置-隐私-相机”选项中，允许本应用程序访问你的相机。" delegate:self cancelButtonTitle:@"好，我知道了" otherButtonTitles:nil];
+//                [alert show];
+//            }
+//        }
+//    }else if ( 1 == buttonIndex ) {
+//            XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManagerWithSelectedAssets:self.dataArray.copy];
+//            browerViewController.maxPhotosNumber = 3;
+//=======
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;
             imagePicker.delegate = self;
@@ -243,7 +243,7 @@ static NSString *identifier = @"XFHomeCollectionViewCell";
     }else if ( 1 == buttonIndex ) {
             XFBrowerViewController *browerViewController = [XFBrowerViewController shareBrowerManagerWithSelectedAssets:self.dataArray.copy];
             browerViewController.maxPhotosNumber = 2;
->>>>>>> master
+//>>>>>>> master
             XFWeakSelf;
             browerViewController.callback = ^(NSArray<XFAssetsModel *> *selectedArray) {
                 [wself.dataArray removeAllObjects];

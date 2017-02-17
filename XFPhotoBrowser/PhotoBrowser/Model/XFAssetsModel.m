@@ -17,35 +17,35 @@
 - (XFAssetsModel *)changeAssetsToModelWithAsset:(id)asset {
     XFAssetsModel *model = [[XFAssetsModel alloc] init];
     
-<<<<<<< HEAD
-    if ( iOS8Later ) {
-        if ([asset isKindOfClass:[PHAsset class]]) {
-            model.modelID = [(PHAsset *)asset localIdentifier];
-        }else
-        {
-            model.modelID = [(ALAsset *)asset valueForProperty:ALAssetPropertyURLs];
-        }
-        
-    } else {
-        
-        model.modelID = [(ALAsset *)asset valueForProperty:ALAssetPropertyURLs];
-        
-    }
-    
-    if ([asset isKindOfClass:[ALAsset class]])
-    {
-        
-    }
-    else if ([asset isKindOfClass:[PHAsset class]])
-    {
-        
-    }
-    else if ([asset isKindOfClass:[UIImage class]])
-    {
-    
-    }
-        
-=======
+//<<<<<<< HEAD
+//    if ( iOS8Later ) {
+//        if ([asset isKindOfClass:[PHAsset class]]) {
+//            model.modelID = [(PHAsset *)asset localIdentifier];
+//        }else
+//        {
+//            model.modelID = [(ALAsset *)asset valueForProperty:ALAssetPropertyURLs];
+//        }
+//        
+//    } else {
+//        
+//        model.modelID = [(ALAsset *)asset valueForProperty:ALAssetPropertyURLs];
+//        
+//    }
+//    
+//    if ([asset isKindOfClass:[ALAsset class]])
+//    {
+//        
+//    }
+//    else if ([asset isKindOfClass:[PHAsset class]])
+//    {
+//        
+//    }
+//    else if ([asset isKindOfClass:[UIImage class]])
+//    {
+//    
+//    }
+//        
+//=======
     if ( [asset isKindOfClass:[PHAsset class]] ) {
         model.modelID = [(PHAsset *)asset localIdentifier];
     } else {
@@ -53,7 +53,7 @@
         model.modelID = [(ALAsset *)asset valueForProperty:ALAssetPropertyURLs];
     }
     
->>>>>>> master
+//>>>>>>> master
     model.asset = asset;
     
     model.selected = NO;

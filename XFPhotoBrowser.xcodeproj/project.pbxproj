@@ -733,7 +733,7 @@
 				TargetAttributes = {
 					61B1FD5C1D2B624A00977DC4 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = EE72863AVL;
+						DevelopmentTeam = 5MLEPWQRVD;
 					};
 				};
 			};
@@ -970,7 +970,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = EE72863AVL;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5MLEPWQRVD;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/XFPhotoBrowser/XFPhotoBrowser.pch";
 				INFOPLIST_FILE = XFPhotoBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -986,7 +987,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = EE72863AVL;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5MLEPWQRVD;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/XFPhotoBrowser/XFPhotoBrowser.pch";
 				INFOPLIST_FILE = XFPhotoBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

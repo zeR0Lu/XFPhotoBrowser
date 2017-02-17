@@ -24,26 +24,26 @@
 }
 
 - (void)setModel:(XFAssetsModel *)model {
-<<<<<<< HEAD
-    if ([model.modelID isKindOfClass:[NSString class]]) {
-        if ([ _model.modelID  isEqualToString:model.modelID ]) {
-            
-        } else {
-            
-            [self.assetImageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.assetImageView.frame)];
-        }
-        
-    }else
-    {
-        if ( [[NSString stringWithFormat:@"%@",[_model.modelID valueForKey:@"public.jpeg"]] isEqualToString:[NSString stringWithFormat:@"%@",[model.modelID valueForKey:@"public.jpeg"]]]) {
-            
-        } else {
-            
-            [self.assetImageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.assetImageView.frame)];
-        }
-        
-    }    _model = model;
-=======
+//<<<<<<< HEAD
+//    if ([model.modelID isKindOfClass:[NSString class]]) {
+//        if ([ _model.modelID  isEqualToString:model.modelID ]) {
+//            
+//        } else {
+//            
+//            [self.assetImageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.assetImageView.frame)];
+//        }
+//        
+//    }else
+//    {
+//        if ( [[NSString stringWithFormat:@"%@",[_model.modelID valueForKey:@"public.jpeg"]] isEqualToString:[NSString stringWithFormat:@"%@",[model.modelID valueForKey:@"public.jpeg"]]]) {
+//            
+//        } else {
+//            
+//            [self.assetImageView xf_setImageWithAsset:model.asset containerWidth:CGRectGetWidth(self.assetImageView.frame)];
+//        }
+//        
+//    }    _model = model;
+//=======
     if ( [_model.modelID isEqualToString:model.modelID] ) {
         
     } else {
@@ -52,7 +52,7 @@
     }
     
     _model = model;
->>>>>>> master
+//>>>>>>> master
 }
 
 - (IBAction)didDeleteButtonAction:(UIButton *)sender {

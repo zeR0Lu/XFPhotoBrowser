@@ -155,15 +155,15 @@
     
     if (iOS8Later) {
         PHFetchOptions *option = [[PHFetchOptions alloc] init];
-<<<<<<< HEAD
-        // 只获取用户的相册
-        option.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
-=======
+//<<<<<<< HEAD
+//        // 只获取用户的相册
+//        option.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+//=======
         if ( iOS9Later ) {
             // 只获取用户的相册
             option.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
         } 
->>>>>>> master
+//>>>>>>> master
         // 过滤只获取照片
         option.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
         
